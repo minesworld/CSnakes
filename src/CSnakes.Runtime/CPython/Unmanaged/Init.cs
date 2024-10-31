@@ -72,10 +72,6 @@ internal unsafe partial class CAPI : IDisposable
     {
         lock (initLock)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                Py_SetPath_UCS2_UTF16(PythonPath);
-            else
-                Py_SetPath_UCS4_UTF32(PythonPath);
             Debug.WriteLine($"Initializing Python on thread {GetNativeThreadId()}");
             Py_Initialize();
 
@@ -89,6 +85,9 @@ internal unsafe partial class CAPI : IDisposable
                     throw new InvalidOperationException("Python initialization failed.");
 
                 InitializeTypesAndStaticObjects();
+
+                // update sys.path by adding missing paths of PythonPath
+                AppendMissingPathsToSysPath(PythonPath.Split(Path.PathSeparator));
             }
             PyEval_SaveThread();
         }
@@ -99,11 +98,6 @@ internal unsafe partial class CAPI : IDisposable
     [LibraryImport(PythonLibraryName, StringMarshalling = StringMarshalling.Custom, StringMarshallingCustomType = typeof(NonFreeUtf8StringMarshaller))]
     internal static partial string? Py_GetVersion();
 
-    [LibraryImport(PythonLibraryName, EntryPoint = "Py_SetPath")]
-    internal static partial void Py_SetPath_UCS2_UTF16([MarshalAs(UnmanagedType.LPWStr)] string path);
-
-    [LibraryImport(PythonLibraryName, EntryPoint = "Py_SetPath", StringMarshallingCustomType = typeof(Utf32StringMarshaller), StringMarshalling = StringMarshalling.Custom)]
-    internal static partial void Py_SetPath_UCS4_UTF32(string path);
 
     protected virtual void Dispose(bool disposing)
     {

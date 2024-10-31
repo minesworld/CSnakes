@@ -377,15 +377,6 @@ internal unsafe partial class CAPI
     [LibraryImport(PythonLibraryName)]
     public static partial int Py_IsInitialized();
 
-    /*
-    [LibraryImport(PythonLibraryName, EntryPoint = "Py_SetPath")]
-    internal static partial void Py_SetPath_UCS2_UTF16([MarshalAs(UnmanagedType.LPWStr)] string path);
-
-    [LibraryImport(PythonLibraryName, EntryPoint = "Py_SetPath", StringMarshallingCustomType = typeof(Utf32StringMarshaller), StringMarshalling = StringMarshalling.Custom)]
-    internal static partial void Py_SetPath_UCS4_UTF32(string path);
-    */
-
-
     [LibraryImport(PythonLibraryName)]
     public static partial void Py_DecRef(pyoPtr ob);
 
