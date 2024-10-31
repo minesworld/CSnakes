@@ -12,15 +12,15 @@ internal class CondaLocator(string condaBinaryPath) : PythonLocator
 
     protected override Version Version { get { return version; } }
 
-    public async Task<bool> PrepareWithPlanAsync(EnvironmentPlan plan, CancellationToken cancellationToken)
+    public async Task<bool> PrepareWithPlanAsync(EnvironmentPlan plan)
     {
         bool success = true;
         try
         {
-            var (exitCode, result, errors) = await ExecuteCondaCommandAsync(plan, $"info --json", cancellationToken);
+            var (exitCode, result, errors) = await ExecuteCondaCommandAsync($"info --json", plan);
             if (exitCode != 0)
             {
-                plan.LogError("Failed to determine Python version from Conda {Error}.", errors);
+                plan.Logger.LogError("Failed to determine Python version from Conda {Error}.", errors);
                 throw new InvalidOperationException("Could not determine Python version from Conda.");
             }
 
@@ -50,9 +50,9 @@ internal class CondaLocator(string condaBinaryPath) : PythonLocator
         return success;
     }
 
-    internal Task<(int process, string? output, string? errors)> ExecuteCondaCommandAsync(EnvironmentPlan plan, string arguments, CancellationToken cancellationToken) => ProcessUtils.ExecuteCommandAsync(plan, condaBinaryPath, arguments, cancellationToken);
+    internal Task<(int process, string? output, string? errors)> ExecuteCondaCommandAsync(string arguments, EnvironmentPlan plan) => ProcessUtils.ExecuteCommandAsync(condaBinaryPath, arguments, plan);
 
-    internal Task<bool> ExecuteCondaShellCommandAsync(EnvironmentPlan plan, string arguments, CancellationToken cancellationToken) => ProcessUtils.ExecuteShellCommandAsync(plan, condaBinaryPath, arguments, cancellationToken);
+    internal Task<bool> ExecuteCondaShellCommandAsync(string arguments, EnvironmentPlan plan) => ProcessUtils.ExecuteShellCommandAsync(condaBinaryPath, arguments, plan);
 
     public IEnvironmentPlanner UpdatePlan(EnvironmentPlan plan) => LocatePythonInternal(plan, folder);
 

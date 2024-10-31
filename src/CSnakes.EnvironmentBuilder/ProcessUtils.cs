@@ -4,7 +4,7 @@ using System.Diagnostics;
 namespace CSnakes.EnvironmentBuilder;
 internal static class ProcessUtils
 {
-    internal static Task<(int exitCode, string? result, string? errors)> ExecutePythonCommandAsync(EnvironmentPlan plan, string arguments, CancellationToken cancellationToken)
+    internal static Task<(int exitCode, string? result, string? errors)> ExecutePythonCommandAsync(string arguments, EnvironmentPlan plan)
     {
         ProcessStartInfo startInfo = new()
         {
@@ -14,10 +14,10 @@ internal static class ProcessUtils
             RedirectStandardError = true,
             RedirectStandardOutput = true
         };
-        return ExecuteCommandAsync(plan, startInfo, cancellationToken);
+        return ExecuteCommandAsync(startInfo, plan);
     }
 
-    internal static Task<(int exitCode, string? result, string? errors)> ExecuteCommandAsync(EnvironmentPlan plan, string fileName, string arguments, CancellationToken cancellationToken)
+    internal static Task<(int exitCode, string? result, string? errors)> ExecuteCommandAsync(string fileName, string arguments, EnvironmentPlan plan)
     {
         ProcessStartInfo startInfo = new()
         {
@@ -26,12 +26,12 @@ internal static class ProcessUtils
             RedirectStandardError = true,
             RedirectStandardOutput = true
         };
-        return ExecuteCommandAsync(plan, startInfo, cancellationToken);
+        return ExecuteCommandAsync(startInfo, plan);
     }
 
-    internal static async Task<bool> ExecuteShellCommandAsync(EnvironmentPlan plan, string fileName, string arguments, CancellationToken cancellationToken)
+    internal static async Task<bool> ExecuteShellCommandAsync(string fileName, string arguments, EnvironmentPlan plan)
     {
-        plan.LogInformation("Executing shell command {FileName} {Arguments}", fileName, arguments);
+        plan.Logger.LogInformation("Executing shell command {FileName} {Arguments}", fileName, arguments);
         ProcessStartInfo startInfo = new()
         {
             FileName = fileName,
@@ -40,12 +40,12 @@ internal static class ProcessUtils
         };
         using Process process = new() { StartInfo = startInfo };
         process.Start();
-        await process.WaitForExitAsync(cancellationToken);
+        await process.WaitForExitAsync(plan.CancellationToken);
         return process.ExitCode == 0;
     }
 
 
-    private static async Task<(int exitCode, string? result, string? errors)> ExecuteCommandAsync(EnvironmentPlan plan, ProcessStartInfo startInfo, CancellationToken cancellationToken) { 
+    private static async Task<(int exitCode, string? result, string? errors)> ExecuteCommandAsync(ProcessStartInfo startInfo, EnvironmentPlan plan) { 
         using Process process = new() { StartInfo = startInfo };
         string? result = null;
         string? errors = null;
@@ -54,7 +54,7 @@ internal static class ProcessUtils
             if (!string.IsNullOrEmpty(e.Data))
             {
                 result += e.Data;
-                plan.LogInformation("{Data}", e.Data);
+                plan.Logger.LogInformation("{Data}", e.Data);
             }
         };
 
@@ -63,14 +63,14 @@ internal static class ProcessUtils
             if (!string.IsNullOrEmpty(e.Data))
             {
                 errors += e.Data;
-                plan.LogError("{Data}", e.Data);
+                plan.Logger.LogError("{Data}", e.Data);
             }
         };
 
         process.Start();
         process.BeginErrorReadLine();
         process.BeginOutputReadLine();
-        await process.WaitForExitAsync(cancellationToken);
+        await process.WaitForExitAsync(plan.CancellationToken);
         return (process.ExitCode, result, errors);
     }
 }

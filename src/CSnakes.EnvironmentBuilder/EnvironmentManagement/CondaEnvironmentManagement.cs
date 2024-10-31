@@ -12,12 +12,12 @@ internal class CondaEnvironmentManagement(string name, CondaLocator conda, strin
         return this;
     }
 
-    public async Task<bool> CreateEnvironmentAsync(EnvironmentPlan plan, CancellationToken cancellationToken)
+    public async Task<bool> CreateEnvironmentAsync(EnvironmentPlan plan)
     {
         var basePath = GetPath();
         if (!Directory.Exists(basePath))
         {
-            plan.LogError("Cannot find conda environment at {basePath}.", basePath);
+            plan.Logger.LogError("Cannot find conda environment at {basePath}.", basePath);
             // TODO: Automate the creation of the conda environments. 
             //var result = conda.ExecuteCondaShellCommand($"env create -n {name} -f {environmentSpecPath}");
             //if (!result)
@@ -28,11 +28,11 @@ internal class CondaEnvironmentManagement(string name, CondaLocator conda, strin
         }
         else
         {
-            plan.LogDebug("Conda environment already exists at {basePath}", basePath);
+            plan.Logger.LogDebug("Conda environment already exists at {basePath}", basePath);
             // TODO: Check if the environment is up to date
         }
 
-        return cancellationToken.IsCancellationRequested != true;
+        return plan.CancellationToken.IsCancellationRequested != true;
     }
 
     protected string GetPath()

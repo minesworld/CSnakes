@@ -1,13 +1,13 @@
 ﻿namespace CSnakes.EnvironmentBuilder;
 public interface IEnvironmentPlanner
 {
-    async Task<bool> WorkOnPlanAsync(EnvironmentPlan plan, CancellationToken cancellationToken)
+    async Task<bool> WorkOnPlanAsync(EnvironmentPlan plan)
     {
-        if (await PrepareWithPlanAsync(plan, cancellationToken) == false) return false;
-        return await UpdatePlan(plan).ExecutePlanAsync(plan, cancellationToken);
+        if (await PrepareWithPlanAsync(plan) == false) return false;
+        return await UpdatePlan(plan).ExecutePlanAsync(plan);
     }
 
-    virtual public Task<bool> PrepareWithPlanAsync(EnvironmentPlan plan, CancellationToken cancellationToken) => Task.FromResult(cancellationToken.IsCancellationRequested != true);
+    virtual public Task<bool> PrepareWithPlanAsync(EnvironmentPlan plan) => Task.FromResult(plan.CancellationToken.IsCancellationRequested != true);
     virtual public IEnvironmentPlanner UpdatePlan(EnvironmentPlan plan) => this;
-    virtual public Task<bool> ExecutePlanAsync(EnvironmentPlan plan, CancellationToken cancellationToken) => Task.FromResult(cancellationToken.IsCancellationRequested != true);
+    virtual public Task<bool> ExecutePlanAsync(EnvironmentPlan plan) => Task.FromResult(plan.CancellationToken.IsCancellationRequested != true);
 }

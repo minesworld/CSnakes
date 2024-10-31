@@ -5,7 +5,7 @@
 /// </summary>
 public interface IPythonPackageInstaller : IEnvironmentPlanner
 {
-    new public async Task<bool> ExecutePlanAsync(EnvironmentPlan plan, CancellationToken cancellationToken) => await InstallPackagesAsync(plan, cancellationToken);
+    new public async Task<bool> ExecutePlanAsync(EnvironmentPlan plan) => await InstallPackagesAsync(plan);
 
 
     /// <summary>
@@ -14,5 +14,5 @@ public interface IPythonPackageInstaller : IEnvironmentPlanner
     /// <param name="home">The home directory.</param>
     /// <param name="virtualEnvironmentLocation">The location of the virtual environment (optional).</param>
     /// <returns>A task representing the asynchronous package installation operation.</returns>
-    abstract public Task<bool> InstallPackagesAsync(EnvironmentPlan plan, CancellationToken cancellationToken);
+    abstract public Task<bool> InstallPackagesAsync(EnvironmentPlan plan);
 }
