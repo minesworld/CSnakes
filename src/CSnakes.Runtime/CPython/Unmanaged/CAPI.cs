@@ -337,6 +337,12 @@ internal unsafe partial class CAPI
 
     [LibraryImport(PythonLibraryName)]
     public static partial nint PyEval_SaveThread();
+
+    [LibraryImport(PythonLibraryName)]
+    public static partial void PyEval_InitThreads();
+
+    [LibraryImport(PythonLibraryName)]
+    public static partial pyoPtr PyEval_GetBuiltins();
     #endregion
 
     #region PyImport
@@ -350,6 +356,10 @@ internal unsafe partial class CAPI
 
     [LibraryImport(PythonLibraryName)]
     public static partial nint PyImport_AddModule(pyoPtr name);
+
+    [LibraryImport(PythonLibraryName)]
+
+    public static partial nint PyImport_ExecCodeModuleObject(pyoPtr name, pyoPtr co, pyoPtr pathname, pyoPtr cpathname);
     #endregion
 
     #region Py
@@ -367,20 +377,14 @@ internal unsafe partial class CAPI
     [LibraryImport(PythonLibraryName)]
     public static partial int Py_IsInitialized();
 
-    /*
-    [LibraryImport(PythonLibraryName, EntryPoint = "Py_SetPath")]
-    internal static partial void Py_SetPath_UCS2_UTF16([MarshalAs(UnmanagedType.LPWStr)] string path);
-
-    [LibraryImport(PythonLibraryName, EntryPoint = "Py_SetPath", StringMarshallingCustomType = typeof(Utf32StringMarshaller), StringMarshalling = StringMarshalling.Custom)]
-    internal static partial void Py_SetPath_UCS4_UTF32(string path);
-    */
-
-
     [LibraryImport(PythonLibraryName)]
     public static partial void Py_DecRef(pyoPtr ob);
 
     [LibraryImport(PythonLibraryName)]
     public static partial void Py_IncRef(pyoPtr ob);
+
+    [LibraryImport(PythonLibraryName)]
+    public static partial nint Py_CompileString(byte *source, byte *filename, int start);
     #endregion
 
     #region PyIter
@@ -426,6 +430,10 @@ internal unsafe partial class CAPI
 
     [LibraryImport(PythonLibraryName)]
     public static partial int PyList_SetItem(pyoPtr obj, nint pos, pyoPtr o);
+
+    [LibraryImport(PythonLibraryName)]
+    public static partial int PyList_Append(pyoPtr obj, pyoPtr o);
+    
     #endregion
 
     #region PyLong
