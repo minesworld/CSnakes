@@ -2,11 +2,13 @@
 using CSnakes.Runtime.EnvironmentManagement;
 using CSnakes.Runtime.Locators;
 using CSnakes.Runtime.PackageManagement;
+using CSnakes.EnvironmentBuilder;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace CSnakes.Runtime;
 
-internal class PythonEnvironment : IPythonEnvironment
+public class PythonEnvironment : IPythonEnvironment
 {
     public ILogger<IPythonEnvironment> Logger { get; private set; }
 
@@ -98,6 +100,46 @@ internal class PythonEnvironment : IPythonEnvironment
         Logger.LogDebug("Python path: {PythonPath}", pythonPath);
 
         var api = new CAPI(pythonDll, pythonLocationMetadata.Version)
+        {
+            PythonPath = pythonPath
+        };
+        return api;
+    }
+
+
+    public static IPythonEnvironment GetPythonEnvironment(EnvironmentPlan plan, ILogger<IPythonEnvironment> logger)
+    {
+        if (pythonEnvironment is null)
+        {
+            lock (locker)
+            {
+                pythonEnvironment ??= new PythonEnvironment(plan, logger);
+            }
+        }
+
+        return pythonEnvironment;
+    }
+
+    private PythonEnvironment(
+       EnvironmentPlan plan,
+       ILogger<IPythonEnvironment> logger)
+    {
+        Logger = logger;
+
+        api = SetupStandardLibrary(plan);
+        api.Initialize();
+    }
+
+
+    private CAPI SetupStandardLibrary(EnvironmentPlan plan)
+    {
+        string pythonDll = plan.PythonLocation.LibPythonPath;
+        string pythonPath = plan.GetPythonPath();
+
+        Logger.LogDebug("Python DLL: {PythonDLL}", pythonDll);
+        Logger.LogDebug("Python path: {PythonPath}", pythonPath);
+
+        var api = new CAPI(pythonDll, plan.PythonLocation.Version)
         {
             PythonPath = pythonPath
         };

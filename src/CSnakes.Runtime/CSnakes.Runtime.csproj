@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <!-- Reference the source generator purely for packaging purposes -->
+    <ProjectReference Include="..\CSnakes.EnvironmentBuilder\CSnakes.EnvironmentBuilder.csproj" />
     <ProjectReference Include="..\CSnakes.SourceGeneration\CSnakes.SourceGeneration.csproj" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
