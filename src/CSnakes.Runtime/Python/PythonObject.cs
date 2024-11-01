@@ -22,6 +22,14 @@ public class PythonObject : MPyOPtr, ICloneable
         return new PythonObject(ptr, false, true);
     }
 
+    new public static PythonObject Steal(pyoPtr ptr)
+    {
+        if (None.DangerousGetHandle() == ptr)
+            return None;
+        return new PythonObject(ptr, false, false);
+    }
+
+
     public static PythonObject Create(MPyOPtr ob)
     {
         if (None.DangerousGetHandle() == ob.DangerousGetHandle())
