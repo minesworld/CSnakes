@@ -1,16 +1,20 @@
-﻿namespace CSnakes.EnvironmentBuilder.Locators;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CSnakes.EnvironmentBuilder;
 
 /// <summary>
 /// Metadata about the location of a Python installation.
 /// </summary>
-/// <param name="Folder">Path on disk where Python is to be loaded from.</param>
 /// <param name="Version">Version of Python being used from the location.</param>
 /// <param name="Debug">True if the Python installation is a debug build.</param>
-public sealed record PythonLocationMetadata(
-    string Folder,
+public sealed record PythonLocation(
     Version Version,
+    string HomePath,
     string LibPythonPath,
-    string PythonPath,
     string PythonBinaryPath,
-    bool Debug = false, 
+    bool Debug = false,
     bool FreeThreaded = false);

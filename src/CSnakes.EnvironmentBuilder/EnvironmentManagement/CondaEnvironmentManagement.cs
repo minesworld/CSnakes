@@ -3,16 +3,12 @@ using Microsoft.Extensions.Logging;
 
 namespace CSnakes.EnvironmentBuilder.EnvironmentManagement;
 #pragma warning disable CS9113 // Parameter is unread. There for future use.
-internal class CondaEnvironmentManagement(string name, CondaLocator conda, string? environmentSpecPath) : IEnvironmentManagement
+public class CondaEnvironmentManagement(string name, CondaLocator conda, string? environmentSpecPath) : EnvironmentManagement, IEnvironmentPlanner
 #pragma warning restore CS9113 // Parameter is unread.
 {
-    public IEnvironmentPlanner UpdatePlan(EnvironmentPlan plan)
-    {
-        ((IEnvironmentManagement)this).AddExtraPackagePaths(plan, GetPath());
-        return this;
-    }
+    public void UpdatePlan(EnvironmentPlan plan) => AddExtraPackagePaths(plan, GetPath());
 
-    public async Task<bool> CreateEnvironmentAsync(EnvironmentPlan plan)
+    override public Task CreateEnvironmentAsync(EnvironmentPlan plan)
     {
         var basePath = GetPath();
         if (!Directory.Exists(basePath))
@@ -32,7 +28,7 @@ internal class CondaEnvironmentManagement(string name, CondaLocator conda, strin
             // TODO: Check if the environment is up to date
         }
 
-        return plan.CancellationToken.IsCancellationRequested != true;
+        return Task.CompletedTask;
     }
 
     protected string GetPath()

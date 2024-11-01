@@ -4,45 +4,37 @@ using System.Runtime.InteropServices;
 
 namespace CSnakes.EnvironmentBuilder.PackageManagement;
 
-public class PipInstaller(string requirementsFileName, string home, string? environmentPath) : IPythonPackageInstaller
+public class PipInstaller(string requirementsFileName, string? environmentPath) : PythonPackageInstaller, IEnvironmentPlanner
 {
     static readonly string pipBinaryName = $"pip{(RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? ".exe" : "")}";
 
-    static public PipInstaller AtHomeFullfillRequirements(string home, string requirementsFileName, string? environmentPath)
+    static public IEnvironmentPlanner WithRequirements(string requirementsFileName, string? environmentPath=null)
     {
-        return new PipInstaller(requirementsFileName, home, environmentPath);
+        return new PipInstaller(requirementsFileName, environmentPath);
     }
 
-    public async Task<bool> InstallPackagesAsync(EnvironmentPlan plan)
-    {
-        bool success = true;
-        try
-        {
-            // TODO:Allow overriding of the requirements file name.
-            string requirementsPath = Path.GetFullPath(Path.Combine(home, requirementsFileName));
-            if (File.Exists(requirementsPath))
-            {
-                plan.Logger.LogInformation("File {Requirements} was found.", requirementsPath);
-                await InstallPackagesWithPipAsync(home, environmentPath, plan);
-            }
-            else
-            {
-                plan.Logger.LogWarning("File {Requirements} was not found.", requirementsPath);
-            }
-        }
-        catch (Exception ex)
-        {
-            success = false;
-        }
+    public void UpdatePlan(EnvironmentPlan plan) { }
 
-        return success;
+    override public async Task InstallPackagesAsync(EnvironmentPlan plan)
+    {
+        // TODO:Allow overriding of the requirements file name.
+        string requirementsPath = Path.GetFullPath(Path.Combine(plan.WorkingDir, requirementsFileName));
+        if (File.Exists(requirementsPath))
+        {
+            plan.Logger.LogInformation("File {Requirements} was found.", requirementsPath);
+            await InstallPackagesWithPipAsync(environmentPath, plan);
+        }
+        else
+        {
+            plan.Logger.LogWarning("File {Requirements} was not found.", requirementsPath);
+        }
     }
 
-    private async Task InstallPackagesWithPipAsync(string home, string? environmentPath, EnvironmentPlan plan)
+    private async Task InstallPackagesWithPipAsync(string? environmentPath, EnvironmentPlan plan)
     {
         ProcessStartInfo startInfo = new()
         {
-            WorkingDirectory = home,
+            WorkingDirectory = plan.WorkingDir,
             FileName = pipBinaryName,
             Arguments = $"install -r {requirementsFileName} --disable-pip-version-check"
         };

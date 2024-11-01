@@ -9,8 +9,12 @@ namespace CSnakes.EnvironmentBuilder.Locators;
 /// Initializes a new instance of the <see cref="PythonLocator"/> class.
 /// </remarks>
 /// <param name="version">The version of Python.</param>
-public abstract class PythonLocator : IEnvironmentPlanner
+public abstract class PythonLocator
 {
+    virtual public Task PrepareWithPlanAsync(EnvironmentPlan plan) => Task.FromResult(plan.CancellationToken.IsCancellationRequested != true);
+    virtual public Task ExecutePlanAsync(EnvironmentPlan plan) => Task.FromResult(plan.CancellationToken.IsCancellationRequested != true);
+
+
     /// <summary>
     /// Gets the version of Python.
     /// </summary>
@@ -71,7 +75,7 @@ public abstract class PythonLocator : IEnvironmentPlanner
     /// </summary>
     /// <param name="folder">The base folder</param>
     /// <returns></returns>
-    protected virtual void AddPythonPaths(EnvironmentPlan plan, string folder, bool freeThreaded = false)
+    protected virtual string AddPythonPaths(EnvironmentPlan plan, string folder, bool freeThreaded = false)
     {
         char sep = Path.PathSeparator;
         string suffix = freeThreaded ? "t" : "";
@@ -79,20 +83,29 @@ public abstract class PythonLocator : IEnvironmentPlanner
         // Add standard library to PYTHONPATH
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
-            plan.AddPath(Path.Combine(folder, "Lib"));
-            plan.AddPath(Path.Combine(folder, "DLLs"));
+            var homePath = Path.Combine(folder, "Lib");
+            plan.AddSearchPath(homePath);
+            plan.AddSearchPath(Path.Combine(folder, "DLLs"));
+            return homePath;
         }
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
         {
-            plan.AddPath(Path.Combine(folder, "lib", $"python{Version.Major}.{Version.Minor}{suffix}"));
-            plan.AddPath(Path.Combine(folder, "lib", $"python{Version.Major}.{Version.Minor}{suffix}", "lib-dynload"));
+            var homePath = Path.Combine(folder, "lib", $"python{Version.Major}.{Version.Minor}{suffix}");
+            plan.AddSearchPath(homePath);
+            plan.AddSearchPath(Path.Combine(homePath, "lib-dynload"));
+            return homePath;
         }
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
         {
-            plan.AddPath(Path.Combine(folder, "lib", $"python{Version.Major}.{Version.Minor}"));
-            plan.AddPath(Path.Combine(folder, "lib", $"python{Version.Major}.{Version.Minor}", "lib-dynload"));
+            var homePath = Path.Combine(folder, "lib", $"python{Version.Major}.{Version.Minor}");
+            plan.AddSearchPath(homePath);
+            plan.AddSearchPath(Path.Combine(folder, "lib", $"python{Version.Major}.{Version.Minor}", "lib-dynload"));
+            return homePath;
         }
-            throw new PlatformNotSupportedException($"Unsupported platform: '{RuntimeInformation.OSDescription}'.");
+
+        throw new PlatformNotSupportedException($"Unsupported platform: '{RuntimeInformation.OSDescription}'.");
     }
 
     /// <summary>
@@ -101,22 +114,23 @@ public abstract class PythonLocator : IEnvironmentPlanner
     /// <param name="folder">The folder path to search for Python.</param>
     /// <returns>The metadata of the located Python installation.</returns>
     /// <exception cref="DirectoryNotFoundException">Python not found at the specified folder.</exception>
-    protected virtual IEnvironmentPlanner LocatePythonInternal(EnvironmentPlan plan, string folder, bool freeThreaded = false)
+    protected virtual void LocatePythonInternal(EnvironmentPlan plan, string folder, bool freeThreaded = false)
     {
         if (!Directory.Exists(folder))
         {
             throw new DirectoryNotFoundException($"Python not found in '{folder}'.");
         }
 
-        plan.Folder = folder;
-        plan.Version = Version;
-        plan.LibPythonPath = GetLibPythonPath(folder, freeThreaded);
-        plan.PythonBinaryPath = GetPythonExecutablePath(folder, freeThreaded);
-        plan.Debug = default;
-        plan.FreeThreaded = freeThreaded;
+        plan.PythonLocation = new PythonLocation(
+            Version,
+            AddPythonPaths(plan, folder, freeThreaded), // return homePath
+            GetLibPythonPath(folder, freeThreaded),
+            GetPythonExecutablePath(folder, freeThreaded),
+            default,
+            freeThreaded
+        );
 
-        AddPythonPaths(plan, folder, freeThreaded);
-        return this;
+        
     }
 
     /// <summary>

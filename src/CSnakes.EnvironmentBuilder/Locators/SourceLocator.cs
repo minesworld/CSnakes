@@ -4,9 +4,9 @@ namespace CSnakes.EnvironmentBuilder.Locators;
 
 internal class SourceLocator(string folder, Version version, bool debug = true, bool freeThreaded = false) : PythonLocator, IEnvironmentPlanner
 {
-    public IEnvironmentPlanner UpdatePlan(EnvironmentPlan plan)
+    public void UpdatePlan(EnvironmentPlan plan)
     {
-        if (IsSupported == false) return this;
+        if (IsSupported == false) return;
 
         var buildFolder = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? Path.Combine(folder, "PCbuild", "amd64") : folder;
 
@@ -15,7 +15,7 @@ internal class SourceLocator(string folder, Version version, bool debug = true, 
             throw new DirectoryNotFoundException($"Python {Version} not found in {buildFolder}.");
         }
 
-        return LocatePythonInternal(plan, buildFolder, freeThreaded);
+        LocatePythonInternal(plan, buildFolder, freeThreaded);
     }
 
     protected override Version Version { get; } = version;
@@ -43,10 +43,12 @@ internal class SourceLocator(string folder, Version version, bool debug = true, 
         }
     }
 
-    protected override void AddPythonPaths(EnvironmentPlan plan, string folder, bool freeThreaded = false)
+    protected override string AddPythonPaths(EnvironmentPlan plan, string folder, bool freeThreaded = false)
     {
-        plan.AddPath(Path.Combine(folder, "..", "..", "Lib"));
-        plan.AddPath(folder);
+        var homePath = Path.GetFullPath(Path.Combine(folder, "..", "..", "Lib"));
+        plan.AddSearchPath(homePath);
+        plan.AddSearchPath(folder);
+        return homePath;
     }
 
     protected override string GetPythonExecutablePath(string folder, bool freeThreaded = false)

@@ -1,10 +1,10 @@
 ﻿namespace CSnakes.EnvironmentBuilder.Locators;
 
-internal class EnvironmentVariableLocator(string variable, Version version) : PythonLocator
+internal class EnvironmentVariableLocator(string variable, Version version) : PythonLocator, IEnvironmentPlanner
 {
     protected override Version Version { get; } = version;
 
-    public IEnvironmentPlanner UpdatePlan(EnvironmentPlan plan)
+    public void UpdatePlan(EnvironmentPlan plan)
     {
         var envValue = Environment.GetEnvironmentVariable(variable);
         if (string.IsNullOrEmpty(envValue))
@@ -12,6 +12,6 @@ internal class EnvironmentVariableLocator(string variable, Version version) : Py
             throw new ArgumentNullException($"Environment variable {variable} not found.");
         }
 
-        return LocatePythonInternal(plan, envValue);
+        LocatePythonInternal(plan, envValue);
     }
 }

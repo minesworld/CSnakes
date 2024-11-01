@@ -1,7 +1,7 @@
 ﻿namespace CSnakes.EnvironmentBuilder.Locators;
-internal class FolderLocator(string folder, Version version) : PythonLocator
+internal class FolderLocator(string folder, Version version) : PythonLocator, IEnvironmentPlanner
 {
     protected override Version Version { get; } = version;
 
-    public IEnvironmentPlanner UpdatePlan(EnvironmentPlan plan) => LocatePythonInternal(plan, folder);
+    public void UpdatePlan(EnvironmentPlan plan) => LocatePythonInternal(plan, folder);
 }

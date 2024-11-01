@@ -1,13 +1,26 @@
 ﻿namespace CSnakes.EnvironmentBuilder;
 public interface IEnvironmentPlanner
 {
-    async Task<bool> WorkOnPlanAsync(EnvironmentPlan plan)
+    virtual async Task WorkOnPlanAsync(EnvironmentPlan plan)
     {
-        if (await PrepareWithPlanAsync(plan) == false) return false;
-        return await UpdatePlan(plan).ExecutePlanAsync(plan);
+        try
+        {
+            if (plan.CanExecute == false) return;
+            await PrepareWithPlanAsync(plan);
+
+            if (plan.CanExecute == false) return;
+            UpdatePlan(plan);
+
+            if (plan.CanExecute == false) return;
+            await ExecutePlanAsync(plan);
+        }
+        catch (Exception ex)
+        {
+            plan.ExecutionFailed(ex);
+        }
     }
 
-    virtual public Task<bool> PrepareWithPlanAsync(EnvironmentPlan plan) => Task.FromResult(plan.CancellationToken.IsCancellationRequested != true);
-    virtual public IEnvironmentPlanner UpdatePlan(EnvironmentPlan plan) => this;
-    virtual public Task<bool> ExecutePlanAsync(EnvironmentPlan plan) => Task.FromResult(plan.CancellationToken.IsCancellationRequested != true);
+    abstract Task PrepareWithPlanAsync(EnvironmentPlan plan);
+    abstract void UpdatePlan(EnvironmentPlan plan);
+    abstract Task ExecutePlanAsync(EnvironmentPlan plan);
 }

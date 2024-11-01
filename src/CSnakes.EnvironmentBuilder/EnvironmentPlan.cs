@@ -6,26 +6,75 @@ public class EnvironmentPlan(ILogger logger, CancellationToken cancellationToken
     public CancellationToken CancellationToken { get => cancellationToken; }
     public ILogger Logger {  get => logger; }
 
-    public string Folder { get; internal set; } = string.Empty;
-    public Version Version { get; internal set; } = new Version();
-    public string LibPythonPath { get; internal set; } = string.Empty;
-    public string PythonPath { get; internal set; } = string.Empty;
-    public string PythonBinaryPath { get; internal set; } = string.Empty;
 
-    public bool Debug { get; internal set; } = false;
-    public bool FreeThreaded { get; internal set; } = false;
+    protected bool canExecute = true;
+    public bool CanExecute { get => canExecute && CancellationToken.IsCancellationRequested != true; }
+    virtual public void ExecutionFailed(Exception? ex=null) { canExecute = false; }
 
 
-    protected List<string> Paths = new List<string>();
-    
 
-    public bool AddPath(string path)
+    protected PythonLocation? pythonLocation = null;
+    virtual public PythonLocation PythonLocation
     {
-        if (Paths.Contains(path)) return false;
+        get {
+            if (pythonLocation == null) throw new InvalidOperationException("no PythonLocation set");
+            return pythonLocation;
+        }
+        set {
+            if (pythonLocation != null) throw new InvalidOperationException("PythonLocation already set");
+            pythonLocation = value;
+        }
+    }
 
-        Paths.Add(path);
+
+    protected string? homePath = null;
+    virtual public string HomePath
+    {
+        get => string.IsNullOrEmpty(homePath) ? PythonLocation.HomePath : homePath;
+        set => homePath = value;
+    }
+
+
+
+    protected List<string> searchPaths = new List<string>();
+
+    public bool AddSearchPath(string path)
+    {
+        if (searchPaths.Contains(path)) return false;
+
+        searchPaths.Add(path);
         return true;
     }
 
-    public List<string> GetPaths() => new List<string>(Paths);
+    public List<string> GetSearchPaths()
+    {
+        var result = new List<string>(searchPaths);
+
+        if (string.IsNullOrEmpty(homePath) == false && result.Contains(homePath) == false)
+            result.Add(homePath);
+
+        if (result.Contains(WorkingDir))
+            result.Remove(WorkingDir);
+        result.Add(WorkingDir);
+
+        return result;
+    }
+
+    public string GetPythonPath() => string.Join(Path.PathSeparator, GetSearchPaths());
+
+
+    protected string? workingDir = null;
+    virtual public string WorkingDir
+    {
+        get
+        {
+            if (workingDir == null) throw new InvalidOperationException("no WorkingDir set");
+            return workingDir;
+        }
+        set
+        {
+            if (workingDir != null) throw new InvalidOperationException("WorkingDir already set");
+            workingDir = value;
+        }
+    }
 }

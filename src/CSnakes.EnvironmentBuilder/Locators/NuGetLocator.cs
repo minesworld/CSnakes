@@ -5,7 +5,7 @@ namespace CSnakes.EnvironmentBuilder.Locators;
 
 public class NuGetLocator(string nugetVersion, Version version) : PythonLocator, IEnvironmentPlanner
 {
-    static public NuGetLocator WithVersion(string version)
+    static public IEnvironmentPlanner WithVersion(string version)
     {
         // See https://github.com/tonybaloney/CSnakes/issues/154#issuecomment-2352116849
         version = version.Replace("alpha.", "a").Replace("beta.", "b").Replace("rc.", "rc");
@@ -22,9 +22,9 @@ public class NuGetLocator(string nugetVersion, Version version) : PythonLocator,
 
     protected override Version Version { get; } = version;
 
-    public IEnvironmentPlanner UpdatePlan(EnvironmentPlan plan)
+    public void UpdatePlan(EnvironmentPlan plan)
     {
-        if (IsSupported ==  false) return this;
+        if (IsSupported == false) return;
 
         var globalNugetPackagesPath = (NuGetPackages: Environment.GetEnvironmentVariable("NUGET_PACKAGES"),
                                        UserProfile  : Environment.GetEnvironmentVariable("USERPROFILE")) switch
@@ -35,7 +35,7 @@ public class NuGetLocator(string nugetVersion, Version version) : PythonLocator,
             };
         // TODO : Load optional path from nuget settings. https://learn.microsoft.com/en-us/nuget/consume-packages/managing-the-global-packages-and-cache-folders
         string nugetPath = Path.Combine(globalNugetPackagesPath, "python", nugetVersion, "tools");
-        return LocatePythonInternal(plan, nugetPath);
+        LocatePythonInternal(plan, nugetPath);
     }
 
     internal override bool IsSupported { get => RuntimeInformation.IsOSPlatform(OSPlatform.Windows); }
