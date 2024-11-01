@@ -11,6 +11,8 @@ namespace CSnakes.EnvironmentBuilder.Locators;
 /// <param name="version">The version of Python.</param>
 public abstract class PythonLocator
 {
+    abstract public Task WorkOnPlanAsync(EnvironmentPlan plan);
+
     virtual public Task PrepareWithPlanAsync(EnvironmentPlan plan) => Task.FromResult(plan.CancellationToken.IsCancellationRequested != true);
     virtual public Task ExecutePlanAsync(EnvironmentPlan plan) => Task.FromResult(plan.CancellationToken.IsCancellationRequested != true);
 

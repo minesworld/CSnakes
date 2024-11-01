@@ -20,6 +20,8 @@ internal class SourceLocator(string folder, Version version, bool debug = true, 
 
     protected override Version Version { get; } = version;
 
+    public override Task WorkOnPlanAsync(EnvironmentPlan plan) => ((IEnvironmentPlanner)this).WorkOnPlanAsync(plan);
+
     protected bool Debug => debug;
 
     protected override string GetLibPythonPath(string folder, bool freeThreaded = false)

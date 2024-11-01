@@ -22,6 +22,8 @@ public class NuGetLocator(string nugetVersion, Version version) : PythonLocator,
 
     protected override Version Version { get; } = version;
 
+    public override Task WorkOnPlanAsync(EnvironmentPlan plan) => ((IEnvironmentPlanner)this).WorkOnPlanAsync(plan);
+
     public void UpdatePlan(EnvironmentPlan plan)
     {
         if (IsSupported == false) return;

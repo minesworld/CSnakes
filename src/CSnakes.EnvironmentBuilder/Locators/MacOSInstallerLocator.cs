@@ -5,6 +5,8 @@ internal class MacOSInstallerLocator(Version version, bool freeThreaded = false)
 {
     protected override Version Version { get; } = version;
 
+    public override Task WorkOnPlanAsync(EnvironmentPlan plan) => ((IEnvironmentPlanner)this).WorkOnPlanAsync(plan);
+
     public void UpdatePlan(EnvironmentPlan plan)
     {
         string framework = freeThreaded ? "PythonT.framework" : "Python.framework";

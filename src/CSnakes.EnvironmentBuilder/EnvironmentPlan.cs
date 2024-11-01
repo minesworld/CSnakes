@@ -26,8 +26,10 @@ public class EnvironmentPlan(ILogger logger, CancellationToken cancellationToken
         }
     }
 
+    public bool HasPythonLocation { get => pythonLocation != null; }
 
-    protected string? homePath = null;
+
+    protected string? homePath = Environment.CurrentDirectory;
     virtual public string HomePath
     {
         get => string.IsNullOrEmpty(homePath) ? PythonLocation.HomePath : homePath;

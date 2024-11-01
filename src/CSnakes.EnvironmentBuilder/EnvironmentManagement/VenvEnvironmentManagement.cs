@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 
 namespace CSnakes.EnvironmentBuilder.EnvironmentManagement;
-public class VenvEnvironmentManagement(string path) : EnvironmentManagement, IEnvironmentPlanner
+public class VenvEnvironmentManagement(string path, bool ensureExists=false) : EnvironmentManagement, IEnvironmentPlanner
 {
     static public IEnvironmentPlanner AtFolder(string path) => new VenvEnvironmentManagement(path);
 

@@ -12,6 +12,8 @@ public class CondaLocator(string condaBinaryPath) : PythonLocator, IEnvironmentP
 
     protected override Version Version { get { return version; } }
 
+    public override Task WorkOnPlanAsync(EnvironmentPlan plan) => ((IEnvironmentPlanner)this).WorkOnPlanAsync(plan);
+
     public async Task PrepareWithPlanAsync(EnvironmentPlan plan)
     {
         var (exitCode, result, errors) = await ExecuteCondaCommandAsync($"info --json", plan);

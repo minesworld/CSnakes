@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace CSnakes.EnvironmentBuilder.EnvironmentManagement;
 #pragma warning disable CS9113 // Parameter is unread. There for future use.
-public class CondaEnvironmentManagement(string name, CondaLocator conda, string? environmentSpecPath) : EnvironmentManagement, IEnvironmentPlanner
+public class CondaEnvironmentManagement(string name, CondaLocator conda, string? environmentSpecPath, bool ensureExists=false) : EnvironmentManagement, IEnvironmentPlanner
 #pragma warning restore CS9113 // Parameter is unread.
 {
     public void UpdatePlan(EnvironmentPlan plan) => AddExtraPackagePaths(plan, GetPath());

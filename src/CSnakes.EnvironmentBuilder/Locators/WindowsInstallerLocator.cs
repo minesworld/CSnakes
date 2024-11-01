@@ -5,7 +5,11 @@ internal class WindowsInstallerLocator(Version version) : PythonLocator, IEnviro
 {
     protected override Version Version { get; } = version;
 
+    public override Task WorkOnPlanAsync(EnvironmentPlan plan) => ((IEnvironmentPlanner)this).WorkOnPlanAsync(plan);
+
+
     readonly string programFilesPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+
 
     public void UpdatePlan(EnvironmentPlan plan)
     {
