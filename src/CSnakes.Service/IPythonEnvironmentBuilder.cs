@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace CSnakes.Runtime;
+namespace CSnakes.Service;
 
 /// <summary>
 /// Represents a builder for creating Python environments.

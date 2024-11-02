@@ -3,7 +3,7 @@ using CSnakes.EnvironmentBuilder.Locators;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace CSnakes.Runtime;
+namespace CSnakes.Service;
 /// <summary>
 /// Extension methods for <see cref="IServiceCollection"/> to configure Python-related services.
 /// </summary>

@@ -1,6 +1,6 @@
 ﻿using CSnakes.EnvironmentBuilder;
 
-namespace CSnakes.Runtime;
+namespace CSnakes.Service;
 public interface IEnvironmentManagement : IEnvironmentPlanner { }
 
 internal class CondaEnvironmentManagement : EnvironmentBuilder.EnvironmentManagement.CondaEnvironmentManagement, IEnvironmentManagement

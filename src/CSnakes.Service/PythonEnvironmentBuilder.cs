@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace CSnakes.Runtime;
+namespace CSnakes.Service;
 
 internal partial class PythonEnvironmentBuilder(IServiceCollection services) : IPythonEnvironmentBuilder
 {

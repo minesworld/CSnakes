@@ -1,7 +1,7 @@
 ﻿using CSnakes.Runtime.CPython;
 using Microsoft.Extensions.Logging;
 
-namespace CSnakes.Runtime;
+namespace CSnakes.Service;
 
 public interface IPythonEnvironment : IDisposable
 {

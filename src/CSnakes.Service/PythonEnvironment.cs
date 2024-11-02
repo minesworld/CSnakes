@@ -1,8 +1,9 @@
 ﻿using CSnakes.EnvironmentBuilder;
 using Microsoft.Extensions.Logging;
+using CSnakes.Runtime;
 using Microsoft.Extensions.Options;
 
-namespace CSnakes.Runtime;
+namespace CSnakes.Service;
 
 public class PythonEnvironment : CPythonEnvironment, IPythonEnvironment
 {
