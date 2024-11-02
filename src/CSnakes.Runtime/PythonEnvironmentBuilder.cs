@@ -31,7 +31,7 @@ internal partial class PythonEnvironmentBuilder(IServiceCollection services) : I
                 try
                 {
                     var condaLocator = sp.GetRequiredService<EnvironmentBuilder.Locators.CondaLocator>();
-                    var logger = sp.GetRequiredService<ILogger<CondaEnvironmentManagement>>();
+                    // var logger = sp.GetRequiredService<ILogger<CondaEnvironmentManagement>>();
                     var condaEnvManager = new CondaEnvironmentManagement(name, condaLocator, environmentSpecPath, ensureEnvironment);
                     return condaEnvManager;
                 }

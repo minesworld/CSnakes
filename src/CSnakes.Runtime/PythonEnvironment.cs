@@ -8,7 +8,7 @@ public class PythonEnvironment : CPythonEnvironment, IPythonEnvironment
 {
     public ILogger<IPythonEnvironment> Logger { get; private set; }
 
-    public static async Task<IPythonEnvironment> GetPythonEnvironment(IEnumerable<EnvironmentBuilder.Locators.PythonLocator> locators, IEnumerable<IPythonPackageInstaller> packageInstallers, PythonEnvironmentOptions options, ILogger<IPythonEnvironment> logger, IEnvironmentManagement? environmentManager = null)
+    public static async Task<IPythonEnvironment> GetPythonEnvironmentAsync(IEnumerable<EnvironmentBuilder.Locators.PythonLocator> locators, IEnumerable<IPythonPackageInstaller> packageInstallers, PythonEnvironmentOptions options, ILogger<IPythonEnvironment> logger, IEnvironmentManagement? environmentManager = null)
     {
 
         if (pythonEnvironment != null) return (IPythonEnvironment)pythonEnvironment;

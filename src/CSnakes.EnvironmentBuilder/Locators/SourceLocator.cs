@@ -2,7 +2,7 @@
 
 namespace CSnakes.EnvironmentBuilder.Locators;
 
-internal class SourceLocator(string folder, Version version, bool debug = true, bool freeThreaded = false) : PythonLocator, IEnvironmentPlanner
+public class SourceLocator(string folder, Version version, bool debug = true, bool freeThreaded = false) : PythonLocator, IEnvironmentPlanner
 {
     public void UpdatePlan(EnvironmentPlan plan)
     {
@@ -20,7 +20,7 @@ internal class SourceLocator(string folder, Version version, bool debug = true, 
 
     protected override Version Version { get; } = version;
 
-    public override Task WorkOnPlanAsync(EnvironmentPlan plan) => ((IEnvironmentPlanner)this).WorkOnPlanAsync(plan);
+    public override Task WorkOnPlanAsync(EnvironmentPlan plan) => IEnvironmentPlanner.WorkOnPlanAsync(this, plan);
 
     protected bool Debug => debug;
 

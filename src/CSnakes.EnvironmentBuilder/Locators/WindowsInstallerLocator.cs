@@ -1,11 +1,11 @@
 ﻿using System.Runtime.InteropServices;
 
 namespace CSnakes.EnvironmentBuilder.Locators;
-internal class WindowsInstallerLocator(Version version) : PythonLocator, IEnvironmentPlanner
+public class WindowsInstallerLocator(Version version) : PythonLocator, IEnvironmentPlanner
 {
     protected override Version Version { get; } = version;
 
-    public override Task WorkOnPlanAsync(EnvironmentPlan plan) => ((IEnvironmentPlanner)this).WorkOnPlanAsync(plan);
+    public override Task WorkOnPlanAsync(EnvironmentPlan plan) => IEnvironmentPlanner.WorkOnPlanAsync(this, plan);
 
 
     readonly string programFilesPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);

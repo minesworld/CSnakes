@@ -12,7 +12,7 @@ public class CondaLocator(string condaBinaryPath) : PythonLocator, IEnvironmentP
 
     protected override Version Version { get { return version; } }
 
-    public override Task WorkOnPlanAsync(EnvironmentPlan plan) => ((IEnvironmentPlanner)this).WorkOnPlanAsync(plan);
+    public override Task WorkOnPlanAsync(EnvironmentPlan plan) => IEnvironmentPlanner.WorkOnPlanAsync(this, plan);
 
     public async Task PrepareWithPlanAsync(EnvironmentPlan plan)
     {
@@ -38,7 +38,7 @@ public class CondaLocator(string condaBinaryPath) : PythonLocator, IEnvironmentP
             throw new InvalidOperationException("Could not determine Conda home.");
         }
 
-        version = ServiceCollectionExtensions.ParsePythonVersion(versionAttribute);
+        version = VersionParser.ParsePythonVersion(versionAttribute);
         folder = basePrefix;
     }
 

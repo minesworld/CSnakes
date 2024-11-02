@@ -1,11 +1,11 @@
 ﻿using System.Runtime.InteropServices;
 
 namespace CSnakes.EnvironmentBuilder.Locators;
-internal class MacOSInstallerLocator(Version version, bool freeThreaded = false) : PythonLocator, IEnvironmentPlanner
+public class MacOSInstallerLocator(Version version, bool freeThreaded = false) : PythonLocator, IEnvironmentPlanner
 {
     protected override Version Version { get; } = version;
 
-    public override Task WorkOnPlanAsync(EnvironmentPlan plan) => ((IEnvironmentPlanner)this).WorkOnPlanAsync(plan);
+    public override Task WorkOnPlanAsync(EnvironmentPlan plan) => IEnvironmentPlanner.WorkOnPlanAsync(this, plan);
 
     public void UpdatePlan(EnvironmentPlan plan)
     {

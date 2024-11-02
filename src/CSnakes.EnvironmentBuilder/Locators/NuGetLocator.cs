@@ -16,13 +16,13 @@ public class NuGetLocator(string nugetVersion, Version version) : PythonLocator,
             version = $"{version}.0";
         }
 
-        return new NuGetLocator(version, ServiceCollectionExtensions.ParsePythonVersion(version));
+        return new NuGetLocator(version, VersionParser.ParsePythonVersion(version));
     }
 
 
     protected override Version Version { get; } = version;
 
-    public override Task WorkOnPlanAsync(EnvironmentPlan plan) => ((IEnvironmentPlanner)this).WorkOnPlanAsync(plan);
+    public override Task WorkOnPlanAsync(EnvironmentPlan plan) => IEnvironmentPlanner.WorkOnPlanAsync(this, plan);
 
     public void UpdatePlan(EnvironmentPlan plan)
     {
