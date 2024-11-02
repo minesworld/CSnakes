@@ -13,6 +13,15 @@ public class CPythonEnvironment
     protected static CPythonEnvironment? pythonEnvironment;
     protected readonly static object locker = new();
 
+    public string Version
+    {
+        get
+        {
+            return CAPI.Py_GetVersion() ?? "No version available";
+        }
+    }
+
+
 
     public static CPythonEnvironment GetCPythonEnvironmentFromExecutedPlan(EnvironmentPlan plan)
     {

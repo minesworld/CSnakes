@@ -1,4 +1,4 @@
-using CSnakes.Runtime.Locators;
+using CSnakes.EnvironmentBuilder.Locators;
 using Microsoft.TestUtilities;
 
 namespace CSnakes.Runtime.Tests.Locators;
@@ -66,7 +66,7 @@ public sealed class NuGetLocatorTests : IDisposable
     {
         NuGetLocator locator = new(PythonNugetVersion, PythonVersion);
 
-        Assert.True(locator.IsSupported());
+        Assert.True(locator.IsSupported);
     }
 
     [ConditionalFact]
@@ -75,7 +75,7 @@ public sealed class NuGetLocatorTests : IDisposable
     {
         NuGetLocator locator = new(PythonNugetVersion, PythonVersion);
 
-        Assert.False(locator.IsSupported());
+        Assert.False(locator.IsSupported);
     }
 
     private class MockNuGetLocator : NuGetLocator

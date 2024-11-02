@@ -1,18 +1,10 @@
-﻿using CSnakes.Runtime.CPython;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 
 namespace CSnakes.Service;
 
 public interface IPythonEnvironment : IDisposable
 {
-    public string Version
-    {
-        get
-        {
-            return CAPI.Py_GetVersion() ?? "No version available";
-        }
-    }
-
+    public string Version { get; }
 
     public bool IsDisposed();
 

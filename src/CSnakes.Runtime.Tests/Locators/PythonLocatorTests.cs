@@ -1,5 +1,4 @@
-﻿using CSnakes.Runtime.Locators;
-using Microsoft.TestUtilities;
+﻿using Microsoft.TestUtilities;
 using System;
 using System.Runtime.InteropServices;
 

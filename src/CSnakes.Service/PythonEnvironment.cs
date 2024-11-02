@@ -1,7 +1,6 @@
 ﻿using CSnakes.EnvironmentBuilder;
 using Microsoft.Extensions.Logging;
 using CSnakes.Runtime;
-using Microsoft.Extensions.Options;
 
 namespace CSnakes.Service;
 

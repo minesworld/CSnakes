@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CSnakes.Runtime\CSnakes.Runtime.csproj" />
+    <ProjectReference Include="..\CSnakes.Service\CSnakes.Service.csproj" />
     <ProjectReference Include="..\TestUtilities\TestUtilities.csproj" />
   </ItemGroup>
 

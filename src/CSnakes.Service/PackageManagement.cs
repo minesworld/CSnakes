@@ -1,5 +1,4 @@
 ﻿using CSnakes.EnvironmentBuilder;
-using Microsoft.Extensions.Logging;
 
 namespace CSnakes.Service;
 public interface IPythonPackageInstaller : IEnvironmentPlanner { }

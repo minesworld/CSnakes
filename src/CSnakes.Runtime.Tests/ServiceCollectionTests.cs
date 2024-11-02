@@ -1,5 +1,7 @@
-﻿using CSnakes.Runtime.Locators;
-using CSnakes.Runtime.PackageManagement;
+﻿using CSnakes.EnvironmentBuilder;
+using CSnakes.EnvironmentBuilder.Locators;
+using CSnakes.EnvironmentBuilder.PackageManagement;
+using CSnakes.Service;
 using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
 
@@ -13,7 +15,7 @@ public class ServiceCollectionTests
     [InlineData("a.3.0")]
     public void ParsePythonVersion_throws_if_version_invalid(string givenVersion)
     {
-        var ex = Assert.Throws<InvalidOperationException>(() => _ = ServiceCollectionExtensions.ParsePythonVersion(givenVersion));
+        var ex = Assert.Throws<InvalidOperationException>(() => _ = VersionParser.ParsePythonVersion(givenVersion));
         Assert.Equal($"Invalid Python version: '{givenVersion}'", ex.Message);
     }
 
@@ -23,7 +25,7 @@ public class ServiceCollectionTests
     [InlineData("3.121213122322330")]
     public void ParsePythonVersion_throws_if_version_unparseable(string givenVersion)
     {
-        var ex = Assert.Throws<InvalidOperationException>(() => _ = ServiceCollectionExtensions.ParsePythonVersion(givenVersion));
+        var ex = Assert.Throws<InvalidOperationException>(() => _ = VersionParser.ParsePythonVersion(givenVersion));
         Assert.Equal($"Failed to parse Python version: '{givenVersion}'", ex.Message);
     }
 
@@ -35,7 +37,7 @@ public class ServiceCollectionTests
     [InlineData("3.13.0.4-rev.5", 3, 13, 0, 4)]
     public void ParsePythonVersion_returns_expected(string givenVersion, int expectedMajor, int expectedMinor, int expectedBuild, int expectedPatch)
     {
-        Version parsedVersion = ServiceCollectionExtensions.ParsePythonVersion(givenVersion);
+        Version parsedVersion = VersionParser.ParsePythonVersion(givenVersion);
 
         Assert.NotNull(parsedVersion);
         Assert.Equal(new Version(expectedMajor, expectedMinor, expectedBuild, expectedPatch), parsedVersion);
