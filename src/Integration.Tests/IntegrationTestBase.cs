@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CSnakes.Service;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -14,7 +15,7 @@ public sealed class PythonEnvironmentCollection : ICollectionFixture<PythonEnvir
 /// <seealso href="https://xunit.net/docs/shared-context.html#collection-fixture"/>
 public sealed class PythonEnvironmentFixture : IDisposable
 {
-    private readonly IPythonEnvironment env;
+    protected IPythonEnvironment env { get; private set; }
     private readonly IHost app;
 
     public PythonEnvironmentFixture()
@@ -41,7 +42,12 @@ public sealed class PythonEnvironmentFixture : IDisposable
             })
             .Build();
 
-        env = app.Services.GetRequiredService<IPythonEnvironment>();
+        AwaitEnv();
+    }
+
+    private async void AwaitEnv()
+    {
+        env = await app.Services.GetRequiredService<Task<IPythonEnvironment>>();
     }
 
     public void Dispose()

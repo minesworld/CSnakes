@@ -1,8 +1,9 @@
-using CSnakes.Runtime;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 using Microsoft.Extensions.Logging;
+using CSnakes.Service;
+using CSnakes.Runtime;
 using CSnakes.Parser;
 using CSnakes.Reflection;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -67,6 +68,7 @@ public class GeneratedSignatureTests(TestEnvironment testEnv) : IClassFixture<Te
             .AddReferences(MetadataReference.CreateFromFile(typeof(Enumerable).Assembly.Location))
             .AddReferences(MetadataReference.CreateFromFile(typeof(TypeConverter).Assembly.Location))
             .AddReferences(MetadataReference.CreateFromFile(typeof(IReadOnlyDictionary<,>).Assembly.Location))
+            .AddReferences(MetadataReference.CreateFromFile(typeof(CPythonEnvironment).Assembly.Location))
             .AddReferences(MetadataReference.CreateFromFile(typeof(IPythonEnvironmentBuilder).Assembly.Location))
             .AddReferences(MetadataReference.CreateFromFile(typeof(ILogger<>).Assembly.Location))
             .AddReferences(MetadataReference.CreateFromFile(AppDomain.CurrentDomain.GetAssemblies().Single(a => a.GetName().Name == "netstandard").Location)) // TODO: (track) Ensure 2.0

@@ -1,3 +1,5 @@
+using CSnakes.Service;
+
 namespace Conda.Tests;
 
 public class BasicTests : CondaTestBase

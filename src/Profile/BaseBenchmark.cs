@@ -1,11 +1,11 @@
-﻿using CSnakes.Runtime;
+﻿using CSnakes.Service;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace Profile;
 public class BaseBenchmark
 {
-    protected readonly IPythonEnvironment Env;
+    protected IPythonEnvironment Env { get; private set; }
 
     public BaseBenchmark()
     {
@@ -26,6 +26,11 @@ public class BaseBenchmark
             })
             .Build();
 
-        Env = app.Services.GetRequiredService<IPythonEnvironment>();
+        AwaitEnv(app);
+    }
+
+    private async void AwaitEnv(IHost app)
+    {
+        Env = await app.Services.GetRequiredService<Task<IPythonEnvironment>>();
     }
 }

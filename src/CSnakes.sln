@@ -32,7 +32,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Conda.Tests", "Conda.Tests\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSnakes.EnvironmentBuilder", "CSnakes.EnvironmentBuilder\CSnakes.EnvironmentBuilder.csproj", "{3A40B9A4-8CFC-4B99-97E6-8F48CF05006E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSnakes.Service", "CSnakes.Service\CSnakes.Service.csproj", "{6B876ED4-4C2B-48E9-BA0D-C1FD8D5D291B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSnakes.Service", "CSnakes.Service\CSnakes.Service.csproj", "{6B876ED4-4C2B-48E9-BA0D-C1FD8D5D291B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sourcegenerator", "sourcegenerator\sourcegenerator.csproj", "{173ED018-2B03-4A2C-B9EB-5FA5EA72C7E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -80,6 +82,10 @@ Global
 		{6B876ED4-4C2B-48E9-BA0D-C1FD8D5D291B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B876ED4-4C2B-48E9-BA0D-C1FD8D5D291B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B876ED4-4C2B-48E9-BA0D-C1FD8D5D291B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{173ED018-2B03-4A2C-B9EB-5FA5EA72C7E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{173ED018-2B03-4A2C-B9EB-5FA5EA72C7E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{173ED018-2B03-4A2C-B9EB-5FA5EA72C7E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{173ED018-2B03-4A2C-B9EB-5FA5EA72C7E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,6 +101,7 @@ Global
 		{38604D9B-2C01-4B82-AFA1-A00E184BAE03} = {E52DC71C-FB58-4E57-9CCA-8A78EAA49123}
 		{3A40B9A4-8CFC-4B99-97E6-8F48CF05006E} = {4374E3D5-3A2C-47F8-B33E-F3C43A20B530}
 		{6B876ED4-4C2B-48E9-BA0D-C1FD8D5D291B} = {4374E3D5-3A2C-47F8-B33E-F3C43A20B530}
+		{173ED018-2B03-4A2C-B9EB-5FA5EA72C7E7} = {4374E3D5-3A2C-47F8-B33E-F3C43A20B530}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4ACC77F9-1BB8-42DE-B647-01C458922F49}

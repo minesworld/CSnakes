@@ -12,6 +12,7 @@
    -->
   <ItemGroup>
     <PackageVersion Include="CommunityToolkit.HighPerformance" Version="8.3.0" />
+    <PackageVersion Include="docopt.net" Version="0.8.1" />
     <PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.9.2" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" />

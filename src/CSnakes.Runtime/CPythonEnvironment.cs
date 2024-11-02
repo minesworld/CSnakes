@@ -1,7 +1,6 @@
 ﻿using CSnakes.Runtime.CPython;
 using CSnakes.EnvironmentBuilder;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace CSnakes.Runtime;
 

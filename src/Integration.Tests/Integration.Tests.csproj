@@ -20,10 +20,11 @@
   <ItemGroup>
     <Using Include="Xunit" />
     <Using Include="CSnakes.Runtime" />
+    <Using Include="CSnakes.Service" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CSnakes.Runtime\CSnakes.Runtime.csproj" />
+    <ProjectReference Include="..\CSnakes.Service\CSnakes.Service.csproj" />
     <ProjectReference Include="..\CSnakes.SourceGeneration\CSnakes.SourceGeneration.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
   </ItemGroup>
 
@@ -36,4 +37,5 @@
     </Content>
     <Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
+
 </Project>

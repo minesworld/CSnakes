@@ -1,3 +1,4 @@
+using CSnakes.Service;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -5,7 +6,7 @@ using Microsoft.Extensions.Logging;
 namespace Conda.Tests;
 public class CondaTestBase : IDisposable
 {
-    private readonly IPythonEnvironment env;
+    protected IPythonEnvironment env { get; private set; }
     private readonly IHost app;
 
     public CondaTestBase()
@@ -34,7 +35,12 @@ public class CondaTestBase : IDisposable
             })
             .Build();
 
-        env = app.Services.GetRequiredService<IPythonEnvironment>();
+        AwaitEnv();
+    }
+
+    private async void AwaitEnv()
+    {
+        env = await app.Services.GetRequiredService<Task<IPythonEnvironment>>();
     }
 
     public void Dispose()

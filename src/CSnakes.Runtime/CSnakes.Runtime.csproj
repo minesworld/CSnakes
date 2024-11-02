@@ -9,11 +9,6 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.HighPerformance" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" />
-      <PackageReference Include="Microsoft.SourceLink.GitHub">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="System.Numerics.Tensors" Condition="'$(TargetFramework)' == 'net9.0'" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
@@ -21,7 +16,6 @@
   <ItemGroup>
     <!-- Reference the source generator purely for packaging purposes -->
     <ProjectReference Include="..\CSnakes.EnvironmentBuilder\CSnakes.EnvironmentBuilder.csproj" />
-    <ProjectReference Include="..\CSnakes.SourceGeneration\CSnakes.SourceGeneration.csproj" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
   <Import Project="Packaging.targets" />

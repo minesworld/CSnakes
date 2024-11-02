@@ -7,7 +7,7 @@ namespace CSnakes.Runtime.Tests;
 
 public class RuntimeTestBase : IDisposable
 {
-    protected readonly IPythonEnvironment env;
+    protected IPythonEnvironment env { get; private set; }
     protected readonly IHost app;
 
     public RuntimeTestBase()
@@ -32,7 +32,12 @@ public class RuntimeTestBase : IDisposable
             })
             .Build();
 
-        env = app.Services.GetRequiredService<IPythonEnvironment>();
+        AwaitEnv();
+    }
+
+    private async void AwaitEnv()
+    {
+        env = await app.Services.GetRequiredService<Task<IPythonEnvironment>>();
     }
 
     public void Dispose()

@@ -6,6 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Locators\NuGetLocatorTests.cs" />
+    <Compile Remove="Locators\PythonLocatorTests.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Locators\NuGetLocatorTests.cs" />
+    <None Include="Locators\PythonLocatorTests.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="coverlet.collector">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -22,7 +32,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CSnakes.Runtime\CSnakes.Runtime.csproj" />
     <ProjectReference Include="..\CSnakes.Service\CSnakes.Service.csproj" />
     <ProjectReference Include="..\TestUtilities\TestUtilities.csproj" />
   </ItemGroup>

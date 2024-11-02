@@ -1,6 +1,5 @@
 ﻿using CSnakes.EnvironmentBuilder;
 using CSnakes.EnvironmentBuilder.Locators;
-using CSnakes.EnvironmentBuilder.PackageManagement;
 using CSnakes.Service;
 using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
@@ -162,6 +161,6 @@ public class ServiceCollectionTests
         var serviceProvider = services.BuildServiceProvider();
         var installer = serviceProvider.GetService<IPythonPackageInstaller>();
         Assert.NotNull(installer);
-        Assert.IsType<PipInstaller>(installer);
+        Assert.IsType<CSnakes.Service.PipInstaller>(installer);
     }
 }
