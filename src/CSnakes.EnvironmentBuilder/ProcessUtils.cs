@@ -8,7 +8,7 @@ internal static class ProcessUtils
     {
         ProcessStartInfo startInfo = new()
         {
-            WorkingDirectory = plan.WorkingDir,
+            WorkingDirectory = plan.WorkingDirectory,
             FileName = plan.PythonLocation.PythonBinaryPath,
             Arguments = arguments,
             RedirectStandardError = true,

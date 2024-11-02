@@ -18,7 +18,7 @@ public class PipInstaller(string requirementsFileName, string? environmentPath) 
     override public async Task InstallPackagesAsync(EnvironmentPlan plan)
     {
         // TODO:Allow overriding of the requirements file name.
-        string requirementsPath = Path.GetFullPath(Path.Combine(plan.WorkingDir, requirementsFileName));
+        string requirementsPath = Path.GetFullPath(Path.Combine(plan.WorkingDirectory, requirementsFileName));
         if (File.Exists(requirementsPath))
         {
             plan.Logger.LogInformation("File {Requirements} was found.", requirementsPath);
@@ -34,7 +34,7 @@ public class PipInstaller(string requirementsFileName, string? environmentPath) 
     {
         ProcessStartInfo startInfo = new()
         {
-            WorkingDirectory = plan.WorkingDir,
+            WorkingDirectory = plan.WorkingDirectory,
             FileName = pipBinaryName,
             Arguments = $"install -r {requirementsFileName} --disable-pip-version-check"
         };

@@ -1,8 +1,10 @@
 ﻿namespace CSnakes.EnvironmentBuilder;
 public interface IEnvironmentPlanner
 {
-    static public async Task WorkOnPlanAsync(IEnvironmentPlanner planner, EnvironmentPlan plan)
+    static public async Task WorkOnPlanAsync(IEnvironmentPlanner planner, EnvironmentPlan plan, bool skip=false)
     {
+        if (skip) return;
+
         try
         {
             if (plan.CanExecute == false) return;

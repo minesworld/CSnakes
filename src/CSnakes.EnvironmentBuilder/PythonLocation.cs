@@ -14,7 +14,6 @@ namespace CSnakes.EnvironmentBuilder;
 /// <param name="Debug">True if the Python installation is a debug build.</param>
 public sealed record PythonLocation(
     Version Version,
-    string HomePath,
     string LibPythonPath,
     string PythonBinaryPath,
     bool Debug = false,

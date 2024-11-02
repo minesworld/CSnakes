@@ -5,7 +5,7 @@ public class WindowsInstallerLocator(Version version) : PythonLocator, IEnvironm
 {
     protected override Version Version { get; } = version;
 
-    public override Task WorkOnPlanAsync(EnvironmentPlan plan) => IEnvironmentPlanner.WorkOnPlanAsync(this, plan);
+    public override Task WorkOnPlanAsync(EnvironmentPlan plan) => IEnvironmentPlanner.WorkOnPlanAsync(this, plan, IsSupported == false | plan.HasPythonLocation);
 
 
     readonly string programFilesPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);

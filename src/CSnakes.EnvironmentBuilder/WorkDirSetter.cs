@@ -17,7 +17,7 @@ public class WorkDirSetter(string path) : IEnvironmentPlanner
         if (Path.Exists(fullPath) == false)
             throw new ArgumentException($"workDir does not exists at {path}");
 
-        plan.WorkingDir = fullPath;
+        plan.WorkingDirectory = fullPath;
     }
 
     public virtual Task ExecutePlanAsync(EnvironmentPlan plan) => Task.FromResult(plan.CancellationToken.IsCancellationRequested != true);

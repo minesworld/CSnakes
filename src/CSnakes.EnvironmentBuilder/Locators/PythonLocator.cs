@@ -77,7 +77,7 @@ public abstract class PythonLocator
     /// </summary>
     /// <param name="folder">The base folder</param>
     /// <returns></returns>
-    protected virtual string AddPythonPaths(EnvironmentPlan plan, string folder, bool freeThreaded = false)
+    protected virtual void AddPythonPaths(EnvironmentPlan plan, string folder, bool freeThreaded = false)
     {
         char sep = Path.PathSeparator;
         string suffix = freeThreaded ? "t" : "";
@@ -85,29 +85,25 @@ public abstract class PythonLocator
         // Add standard library to PYTHONPATH
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
-            var homePath = Path.Combine(folder, "Lib");
-            plan.AddSearchPath(homePath);
+            plan.AddSearchPath(Path.Combine(folder, "Lib"));
             plan.AddSearchPath(Path.Combine(folder, "DLLs"));
-            return homePath;
         }
-
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+        else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
         {
-            var homePath = Path.Combine(folder, "lib", $"python{Version.Major}.{Version.Minor}{suffix}");
-            plan.AddSearchPath(homePath);
-            plan.AddSearchPath(Path.Combine(homePath, "lib-dynload"));
-            return homePath;
+            var libPath = Path.Combine(folder, "lib", $"python{Version.Major}.{Version.Minor}{suffix}");
+            plan.AddSearchPath(libPath);
+            plan.AddSearchPath(Path.Combine(libPath, "lib-dynload"));
         }
-
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
         {
-            var homePath = Path.Combine(folder, "lib", $"python{Version.Major}.{Version.Minor}");
-            plan.AddSearchPath(homePath);
-            plan.AddSearchPath(Path.Combine(folder, "lib", $"python{Version.Major}.{Version.Minor}", "lib-dynload"));
-            return homePath;
+            var libPath = Path.Combine(folder, "lib", $"python{Version.Major}.{Version.Minor}");
+            plan.AddSearchPath(libPath);
+            plan.AddSearchPath(Path.Combine(libPath, "lib-dynload"));
         }
-
-        throw new PlatformNotSupportedException($"Unsupported platform: '{RuntimeInformation.OSDescription}'.");
+        else
+        {
+            throw new PlatformNotSupportedException($"Unsupported platform: '{RuntimeInformation.OSDescription}'.");
+        }
     }
 
     /// <summary>
@@ -125,14 +121,13 @@ public abstract class PythonLocator
 
         plan.PythonLocation = new PythonLocation(
             Version,
-            AddPythonPaths(plan, folder, freeThreaded), // return homePath
-            GetLibPythonPath(folder, freeThreaded),
-            GetPythonExecutablePath(folder, freeThreaded),
+            Path.GetFullPath(GetLibPythonPath(folder, freeThreaded)),
+            Path.GetFullPath(GetPythonExecutablePath(folder, freeThreaded)),
             default,
             freeThreaded
         );
 
-        
+        AddPythonPaths(plan, folder, freeThreaded);
     }
 
     /// <summary>

@@ -23,7 +23,6 @@ public abstract class EnvironmentManagement
             envLibPath = Path.Combine(basePath, "lib", $"python{pl.Version.Major}.{pl.Version.Minor}{suffix}", "site-packages");
         }
         plan.Logger.LogDebug("Adding environment site-packages to extra paths: {VenvLibPath}", envLibPath);
-        plan.HomePath = envLibPath;
         return plan.AddSearchPath(envLibPath);
     }
 

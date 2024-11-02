@@ -12,7 +12,7 @@ public class CondaLocator(string condaBinaryPath) : PythonLocator, IEnvironmentP
 
     protected override Version Version { get { return version; } }
 
-    public override Task WorkOnPlanAsync(EnvironmentPlan plan) => IEnvironmentPlanner.WorkOnPlanAsync(this, plan);
+    public override Task WorkOnPlanAsync(EnvironmentPlan plan) => IEnvironmentPlanner.WorkOnPlanAsync(this, plan, IsSupported == false | plan.HasPythonLocation);
 
     public async Task PrepareWithPlanAsync(EnvironmentPlan plan)
     {

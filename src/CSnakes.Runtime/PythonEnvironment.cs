@@ -27,25 +27,37 @@ public class PythonEnvironment : CPythonEnvironment, IPythonEnvironment
         }
 
         string home = options.Home;
-        string[] extraPaths = options.ExtraPaths;
 
+        if (string.IsNullOrEmpty(home) == false)
+        {
+            await WorkDirSetter.WithPath(home).WorkOnPlanAsync(plan);
+        }
+
+        /*
         home = Path.GetFullPath(home);
         if (!Directory.Exists(home))
         {
             logger.LogError("Python home directory does not exist: {Home}", home);
             throw new DirectoryNotFoundException("Python home directory does not exist.");
         }
+        */
 
         if (environmentManager is not null)
         {
             await environmentManager.WorkOnPlanAsync(plan);
         }
 
-        logger.LogInformation("Setting up Python environment from {PythonLocation} using home of {Home}", plan.PythonLocation.HomePath, home);
+        logger.LogInformation("Setting up Python environment from {PythonLocation} using home of {Home}", plan.WorkingDirectory, home);
 
         foreach (var installer in packageInstallers)
         {
             await installer.WorkOnPlanAsync(plan);
+        }
+
+
+        foreach(var path in options.ExtraPaths)
+        {
+            plan.AddSearchPath(path);
         }
 
         lock (locker)

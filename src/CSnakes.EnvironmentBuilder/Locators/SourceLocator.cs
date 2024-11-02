@@ -20,7 +20,7 @@ public class SourceLocator(string folder, Version version, bool debug = true, bo
 
     protected override Version Version { get; } = version;
 
-    public override Task WorkOnPlanAsync(EnvironmentPlan plan) => IEnvironmentPlanner.WorkOnPlanAsync(this, plan);
+    public override Task WorkOnPlanAsync(EnvironmentPlan plan) => IEnvironmentPlanner.WorkOnPlanAsync(this, plan, IsSupported == false | plan.HasPythonLocation);
 
     protected bool Debug => debug;
 
@@ -45,12 +45,10 @@ public class SourceLocator(string folder, Version version, bool debug = true, bo
         }
     }
 
-    protected override string AddPythonPaths(EnvironmentPlan plan, string folder, bool freeThreaded = false)
+    protected override void AddPythonPaths(EnvironmentPlan plan, string folder, bool freeThreaded = false)
     {
-        var homePath = Path.GetFullPath(Path.Combine(folder, "..", "..", "Lib"));
-        plan.AddSearchPath(homePath);
+        plan.AddSearchPath(Path.Combine(folder, "..", "..", "Lib"));
         plan.AddSearchPath(folder);
-        return homePath;
     }
 
     protected override string GetPythonExecutablePath(string folder, bool freeThreaded = false)
