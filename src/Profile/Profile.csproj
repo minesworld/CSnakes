@@ -4,6 +4,12 @@
     <OutputType>Exe</OutputType>
   </PropertyGroup>
 
+
+  <ItemGroup>
+    <ProjectReference Include="..\CSnakes.Service\CSnakes.Service.csproj" />
+    <ProjectReference Include="..\CSnakes.SourceGeneration\CSnakes.SourceGeneration.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
+  </ItemGroup>
+
   <ItemGroup>
     <None Remove="marshalling_benchmarks.py" />
   </ItemGroup>
@@ -18,12 +24,7 @@
     <PackageReference Include="BenchmarkDotNet" />
     <PackageReference Include="Microsoft.VisualStudio.DiagnosticsHub.BenchmarkDotNetDiagnosers" />
     <PackageReference Include="python" />
-    <PackageReference Include="Superpower" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\CSnakes.Service\CSnakes.Service.csproj" />
-    <ProjectReference Include="..\TestUtilities\TestUtilities.csproj" />
-  </ItemGroup>
 
 </Project>

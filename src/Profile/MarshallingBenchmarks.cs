@@ -1,4 +1,4 @@
-﻿using CSnakes.Runtime;
+﻿using CSnakes.Service;
 using BenchmarkDotNet.Attributes;
 using Microsoft.VSDiagnostics;
 
