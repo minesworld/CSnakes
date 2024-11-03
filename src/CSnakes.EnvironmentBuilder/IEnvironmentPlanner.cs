@@ -22,7 +22,7 @@ public interface IEnvironmentPlanner
         }
     }
 
-    virtual async Task WorkOnPlanAsync(EnvironmentPlan plan) => WorkOnPlanAsync(this, plan);
+    virtual Task WorkOnPlanAsync(EnvironmentPlan plan) => WorkOnPlanAsync(this, plan);
  
     abstract Task PrepareWithPlanAsync(EnvironmentPlan plan);
     abstract void UpdatePlan(EnvironmentPlan plan);
