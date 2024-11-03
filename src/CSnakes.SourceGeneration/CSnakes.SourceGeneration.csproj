@@ -5,6 +5,25 @@
     <NoWarn>$(NoWarn);RS1035</NoWarn>
     <IsRoslynComponent>true</IsRoslynComponent>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\CSnakes.Parsing\CallerArgumentExpressionAttribute.cs" Link="CallerArgumentExpressionAttribute.cs" />
+    <Compile Include="..\CSnakes.Parsing\GeneratorError.cs" Link="GeneratorError.cs" />
+    <Compile Include="..\CSnakes.Parsing\NotNullAttributePolyfill.cs" Link="NotNullAttributePolyfill.cs" />
+    <Compile Include="..\CSnakes.Parsing\NullableExtensions.cs" Link="NullableExtensions.cs" />
+    <Compile Include="..\CSnakes.Parsing\Parser\PythonParser.Args.cs" Link="Parser\PythonParser.Args.cs" />
+    <Compile Include="..\CSnakes.Parsing\Parser\PythonParser.Constants.cs" Link="Parser\PythonParser.Constants.cs" />
+    <Compile Include="..\CSnakes.Parsing\Parser\PythonParser.Function.cs" Link="Parser\PythonParser.Function.cs" />
+    <Compile Include="..\CSnakes.Parsing\Parser\PythonParser.Parameters.cs" Link="Parser\PythonParser.Parameters.cs" />
+    <Compile Include="..\CSnakes.Parsing\Parser\PythonParser.TypeDef.cs" Link="Parser\PythonParser.TypeDef.cs" />
+    <Compile Include="..\CSnakes.Parsing\Parser\PythonTokenizer.cs" Link="Parser\PythonTokenizer.cs" />
+    <Compile Include="..\CSnakes.Parsing\Parser\PythonTokens.cs" Link="Parser\PythonTokens.cs" />
+    <Compile Include="..\CSnakes.Parsing\Parser\Types\PythonConstant.cs" Link="Parser\Types\PythonConstant.cs" />
+    <Compile Include="..\CSnakes.Parsing\Parser\Types\PythonFunctionDefinition.cs" Link="Parser\Types\PythonFunctionDefinition.cs" />
+    <Compile Include="..\CSnakes.Parsing\Parser\Types\PythonFunctionParameter.cs" Link="Parser\Types\PythonFunctionParameter.cs" />
+    <Compile Include="..\CSnakes.Parsing\Parser\Types\PythonFunctionParameterType.cs" Link="Parser\Types\PythonFunctionParameterType.cs" />
+    <Compile Include="..\CSnakes.Parsing\Parser\Types\PythonParameterType.cs" Link="Parser\Types\PythonParameterType.cs" />
+    <Compile Include="..\CSnakes.Parsing\Parser\Types\PythonTypeSpec.cs" Link="Parser\Types\PythonTypeSpec.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers">
@@ -17,6 +36,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Superpower" GeneratePathProperty="true" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Parser\Types\" />
   </ItemGroup>
 
   <PropertyGroup>
