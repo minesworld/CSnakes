@@ -5,6 +5,9 @@
 /// </summary>
 public abstract class PythonPackageInstaller
 {
+    virtual public string EnvironmentPath { get; set; } = String.Empty;
+
+
     /// <summary>
     /// Installs the specified packages.
     /// </summary>
@@ -15,5 +18,5 @@ public abstract class PythonPackageInstaller
 
 
     virtual public Task PrepareWithPlanAsync(EnvironmentPlan plan) => Task.FromResult(plan.CancellationToken.IsCancellationRequested != true);
-    virtual public Task ExecutePlanAsync(EnvironmentPlan plan) => InstallPackagesAsync(plan);
+    virtual public async Task ExecutePlanAsync(EnvironmentPlan plan) { await InstallPackagesAsync(plan); }
 }

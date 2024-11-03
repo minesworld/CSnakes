@@ -26,11 +26,6 @@ public class BaseBenchmark
             })
             .Build();
 
-        AwaitEnv(app);
-    }
-
-    private async void AwaitEnv(IHost app)
-    {
-        Env = await app.Services.GetRequiredService<Task<IPythonEnvironment>>();
+        Env = app.Services.GetRequiredService<IPythonEnvironment>();
     }
 }

@@ -42,12 +42,7 @@ public sealed class PythonEnvironmentFixture : IDisposable
             })
             .Build();
 
-        AwaitEnv();
-    }
-
-    private async void AwaitEnv()
-    {
-        env = await app.Services.GetRequiredService<Task<IPythonEnvironment>>();
+        env = app.Services.GetRequiredService<IPythonEnvironment>();
     }
 
     public void Dispose()
@@ -64,5 +59,5 @@ public sealed class PythonEnvironmentFixture : IDisposable
 [Collection(PythonEnvironmentCollection.Name)]
 public abstract class IntegrationTestBase(PythonEnvironmentFixture fixture)
 {
-    public IPythonEnvironment Env { get; } = fixture.Env;
+    public IPythonEnvironment Env => fixture.Env;
 }

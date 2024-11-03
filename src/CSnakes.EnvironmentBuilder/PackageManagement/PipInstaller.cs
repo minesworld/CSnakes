@@ -4,33 +4,34 @@ using System.Runtime.InteropServices;
 
 namespace CSnakes.EnvironmentBuilder.PackageManagement;
 
-public class PipInstaller(string requirementsFileName, string? environmentPath) : PythonPackageInstaller, IEnvironmentPlanner
+public class PipInstaller(string requirementsFileName) : PythonPackageInstaller, IEnvironmentPlanner
 {
     static readonly string pipBinaryName = $"pip{(RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? ".exe" : "")}";
 
-    static public IEnvironmentPlanner WithRequirements(string requirementsFileName, string? environmentPath=null)
+    static public IEnvironmentPlanner WithRequirements(string requirementsFileName)
     {
-        return new PipInstaller(requirementsFileName, environmentPath);
+        return new PipInstaller(requirementsFileName);
     }
 
     public void UpdatePlan(EnvironmentPlan plan) { }
 
-    override public async Task InstallPackagesAsync(EnvironmentPlan plan)
+    override public Task InstallPackagesAsync(EnvironmentPlan plan)
     {
         // TODO:Allow overriding of the requirements file name.
         string requirementsPath = Path.GetFullPath(Path.Combine(plan.WorkingDirectory, requirementsFileName));
         if (File.Exists(requirementsPath))
         {
             plan.Logger.LogInformation("File {Requirements} was found.", requirementsPath);
-            await InstallPackagesWithPipAsync(environmentPath, plan);
+            return InstallPackagesWithPipAsync(plan);
         }
         else
         {
             plan.Logger.LogWarning("File {Requirements} was not found.", requirementsPath);
+            return Task.CompletedTask;
         }
     }
 
-    private async Task InstallPackagesWithPipAsync(string? environmentPath, EnvironmentPlan plan)
+    private async Task InstallPackagesWithPipAsync(EnvironmentPlan plan)
     {
         ProcessStartInfo startInfo = new()
         {
@@ -39,9 +40,9 @@ public class PipInstaller(string requirementsFileName, string? environmentPath) 
             Arguments = $"install -r {requirementsFileName} --disable-pip-version-check"
         };
 
-        if (environmentPath is not null)
+        if (String.IsNullOrEmpty(EnvironmentPath) == false)
         {
-            string virtualEnvironmentLocation = Path.GetFullPath(environmentPath);
+            string virtualEnvironmentLocation = Path.GetFullPath(EnvironmentPath);
             plan.Logger.LogInformation("Using virtual environment at {VirtualEnvironmentLocation} to install packages with pip.", virtualEnvironmentLocation);
             string venvScriptPath = Path.Combine(virtualEnvironmentLocation, RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "Scripts" : "bin");
             // TODO: Check that the pip executable exists, and if not, raise an exception with actionable steps.
@@ -70,9 +71,12 @@ public class PipInstaller(string requirementsFileName, string? environmentPath) 
         };
 
         process.Start();
+
         process.BeginErrorReadLine();
         process.BeginOutputReadLine();
-        await process.WaitForExitAsync(plan.CancellationToken);
+
+        // await process.WaitForExitAsync(plan.CancellationToken);
+        process.WaitForExit(); // await will fail - somehow with ANOTHER await will be continued... WTF ??
 
         if (process.ExitCode != 0)
         {

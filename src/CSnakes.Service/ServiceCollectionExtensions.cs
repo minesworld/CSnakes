@@ -20,7 +20,7 @@ public static partial class ServiceCollectionExtensions
         var pythonBuilder = new PythonEnvironmentBuilder(services);
 
         services.AddSingleton<IPythonEnvironmentBuilder>(pythonBuilder);
-        services.AddSingleton<Task<IPythonEnvironment>>(sp =>
+        services.AddSingleton<IPythonEnvironment>(sp =>
         {
             var envBuilder = sp.GetRequiredService<IPythonEnvironmentBuilder>();
             var locators = sp.GetServices<PythonLocator>();
@@ -30,7 +30,7 @@ public static partial class ServiceCollectionExtensions
 
             var options = envBuilder.GetOptions();
 
-            return PythonEnvironment.GetPythonEnvironmentAsync(locators, installers, options, logger, environmentManager);
+            return PythonEnvironment.GetPythonEnvironment(locators, installers, options, logger, environmentManager);
         });
 
         return pythonBuilder;
@@ -161,7 +161,7 @@ public static partial class ServiceCollectionExtensions
             sp =>
             {
                 var logger = sp.GetRequiredService<ILogger<PipInstaller>>();
-                return new PipInstaller(requirementsPath, null);
+                return new PipInstaller(requirementsPath);
             }
         );
         return builder;

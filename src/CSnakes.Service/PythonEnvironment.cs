@@ -8,6 +8,28 @@ public class PythonEnvironment : CPythonEnvironment, IPythonEnvironment
 {
     public ILogger<IPythonEnvironment> Logger { get; private set; }
 
+
+    public static IPythonEnvironment GetPythonEnvironment(IEnumerable<EnvironmentBuilder.Locators.PythonLocator> locators, IEnumerable<IPythonPackageInstaller> packageInstallers, PythonEnvironmentOptions options, ILogger<IPythonEnvironment> logger, IEnvironmentManagement? environmentManager = null)
+    {
+        IPythonEnvironment result = null;
+
+        Thread thread = new System.Threading.Thread(async () => {
+            try
+            {
+                result = await GetPythonEnvironmentAsync(locators, packageInstallers, options, logger, environmentManager);
+            }
+            catch (Exception exp)
+            {
+                System.Diagnostics.Debug.WriteLine(exp.Message);
+            }
+        });
+
+        thread.Start();
+        thread.Join();
+
+        return result;
+    }
+
     public static async Task<IPythonEnvironment> GetPythonEnvironmentAsync(IEnumerable<EnvironmentBuilder.Locators.PythonLocator> locators, IEnumerable<IPythonPackageInstaller> packageInstallers, PythonEnvironmentOptions options, ILogger<IPythonEnvironment> logger, IEnvironmentManagement? environmentManager = null)
     {
 
@@ -51,6 +73,7 @@ public class PythonEnvironment : CPythonEnvironment, IPythonEnvironment
 
         foreach (var installer in packageInstallers)
         {
+            if (environmentManager is not null) installer.EnvironmentPath = environmentManager.EnvironmentPath;
             await installer.WorkOnPlanAsync(plan);
         }
 

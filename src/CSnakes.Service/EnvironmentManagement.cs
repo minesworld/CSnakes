@@ -1,7 +1,10 @@
 ﻿using CSnakes.EnvironmentBuilder;
 
 namespace CSnakes.Service;
-public interface IEnvironmentManagement : IEnvironmentPlanner { }
+public interface IEnvironmentManagement : IEnvironmentPlanner {
+
+    abstract public string EnvironmentPath { get; }
+}
 
 public class CondaEnvironmentManagement : EnvironmentBuilder.EnvironmentManagement.CondaEnvironmentManagement, IEnvironmentManagement
 {

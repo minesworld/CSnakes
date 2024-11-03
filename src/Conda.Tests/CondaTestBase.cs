@@ -35,12 +35,7 @@ public class CondaTestBase : IDisposable
             })
             .Build();
 
-        AwaitEnv();
-    }
-
-    private async void AwaitEnv()
-    {
-        env = await app.Services.GetRequiredService<Task<IPythonEnvironment>>();
+        env = app.Services.GetRequiredService<IPythonEnvironment>();
     }
 
     public void Dispose()
