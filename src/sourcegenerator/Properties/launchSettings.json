@@ -1,7 +1,8 @@
 {
   "profiles": {
     "sourcegenerator": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "-O ..\\..\\..\\..\\Integration.Tests\\python\\test_args.py"
     }
   }
 }
