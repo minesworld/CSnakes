@@ -8,9 +8,14 @@ public class PipInstaller(string requirementsFileName) : PythonPackageInstaller,
 {
     static readonly string pipBinaryName = $"pip{(RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? ".exe" : "")}";
 
-    static public IEnvironmentPlanner WithRequirements(string requirementsFileName)
+    static public IEnvironmentPlanner WithRequirements(string requirementsFileName, string? environmentPath)
     {
-        return new PipInstaller(requirementsFileName);
+        var pipInstaller = new PipInstaller(requirementsFileName);
+        if (String.IsNullOrEmpty(requirementsFileName) == false)
+        {
+            pipInstaller.EnvironmentPath = environmentPath;
+        }
+        return pipInstaller;
     }
 
     public void UpdatePlan(EnvironmentPlan plan) { }
