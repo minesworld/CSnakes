@@ -31,7 +31,7 @@ internal static class ProcessUtils
 
     internal static async Task<bool> ExecuteShellCommandAsync(string fileName, string arguments, EnvironmentPlan plan)
     {
-        plan.Logger.LogInformation("Executing shell command {FileName} {Arguments}", fileName, arguments);
+        plan.Logger?.LogInformation("Executing shell command {FileName} {Arguments}", fileName, arguments);
         ProcessStartInfo startInfo = new()
         {
             FileName = fileName,

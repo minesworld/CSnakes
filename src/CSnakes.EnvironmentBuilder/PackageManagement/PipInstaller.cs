@@ -48,7 +48,7 @@ public class PipInstaller(string requirementsFileName) : PythonPackageInstaller,
         if (String.IsNullOrEmpty(EnvironmentPath) == false)
         {
             string virtualEnvironmentLocation = Path.GetFullPath(EnvironmentPath);
-            plan.Logger.LogInformation("Using virtual environment at {VirtualEnvironmentLocation} to install packages with pip.", virtualEnvironmentLocation);
+            plan.Logger?.LogInformation("Using virtual environment at {VirtualEnvironmentLocation} to install packages with pip.", virtualEnvironmentLocation);
             string venvScriptPath = Path.Combine(virtualEnvironmentLocation, RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "Scripts" : "bin");
             // TODO: Check that the pip executable exists, and if not, raise an exception with actionable steps.
             startInfo.FileName = Path.Combine(venvScriptPath, pipBinaryName);
@@ -63,7 +63,7 @@ public class PipInstaller(string requirementsFileName) : PythonPackageInstaller,
         {
             if (!string.IsNullOrEmpty(e.Data))
             {
-                plan.Logger.LogInformation("{Data}", e.Data);
+                plan.Logger?.LogInformation("{Data}", e.Data);
             }
         };
 
@@ -71,7 +71,7 @@ public class PipInstaller(string requirementsFileName) : PythonPackageInstaller,
         {
             if (!string.IsNullOrEmpty(e.Data))
             {
-                plan.Logger.LogWarning("{Data}", e.Data);
+                plan.Logger?.LogWarning("{Data}", e.Data);
             }
         };
 
@@ -85,7 +85,7 @@ public class PipInstaller(string requirementsFileName) : PythonPackageInstaller,
 
         if (process.ExitCode != 0)
         {
-            plan.Logger.LogError("Failed to install packages.");
+            plan.Logger?.LogError("Failed to install packages.");
             throw new InvalidOperationException("Failed to install packages.");
         }
     }
