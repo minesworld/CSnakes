@@ -7,7 +7,7 @@ using CSnakes.EnvironmentBuilder.Locators;
 using CSnakes.EnvironmentBuilder.EnvironmentManagement;
 using CSnakes.EnvironmentBuilder.PackageManagement;
 
-var homeDir = @"test"; // should be an absolute path
+var workingDir = @"test"; // should be an absolute path
 var venvDir = @"test\.venv";
 
 ILogger? logger = null;
