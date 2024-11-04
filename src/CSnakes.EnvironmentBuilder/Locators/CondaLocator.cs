@@ -19,7 +19,7 @@ public class CondaLocator(string condaBinaryPath) : PythonLocator, IEnvironmentP
         var (exitCode, result, errors) = await ExecuteCondaCommandAsync($"info --json", plan);
         if (exitCode != 0)
         {
-            plan.Logger.LogError("Failed to determine Python version from Conda {Error}.", errors);
+            plan.Logger?.LogError("Failed to determine Python version from Conda {Error}.", errors);
             throw new InvalidOperationException("Could not determine Python version from Conda.");
         }
 

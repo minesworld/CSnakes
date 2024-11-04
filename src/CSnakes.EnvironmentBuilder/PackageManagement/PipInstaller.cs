@@ -26,12 +26,12 @@ public class PipInstaller(string requirementsFileName) : PythonPackageInstaller,
         string requirementsPath = Path.GetFullPath(Path.Combine(plan.WorkingDirectory, requirementsFileName));
         if (File.Exists(requirementsPath))
         {
-            plan.Logger.LogInformation("File {Requirements} was found.", requirementsPath);
+            plan.Logger?.LogInformation("File {Requirements} was found.", requirementsPath);
             return InstallPackagesWithPipAsync(plan);
         }
         else
         {
-            plan.Logger.LogWarning("File {Requirements} was not found.", requirementsPath);
+            plan.Logger?.LogWarning("File {Requirements} was not found.", requirementsPath);
             return Task.CompletedTask;
         }
     }

@@ -54,7 +54,7 @@ internal static class ProcessUtils
             if (!string.IsNullOrEmpty(e.Data))
             {
                 result += e.Data;
-                plan.Logger.LogInformation("{Data}", e.Data);
+                plan.Logger?.LogInformation("{Data}", e.Data);
             }
         };
 
@@ -63,7 +63,7 @@ internal static class ProcessUtils
             if (!string.IsNullOrEmpty(e.Data))
             {
                 errors += e.Data;
-                plan.Logger.LogError("{Data}", e.Data);
+                plan.Logger?.LogError("{Data}", e.Data);
             }
         };
 

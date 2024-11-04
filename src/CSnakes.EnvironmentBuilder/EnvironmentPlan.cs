@@ -4,7 +4,7 @@ namespace CSnakes.EnvironmentBuilder;
 public class EnvironmentPlan(ILogger logger, CancellationToken cancellationToken)
 {
     public CancellationToken CancellationToken { get => cancellationToken; }
-    public ILogger Logger {  get => logger; }
+    public ILogger? Logger {  get => logger; }
 
 
     protected bool canExecute = true;

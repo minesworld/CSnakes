@@ -13,25 +13,25 @@ public class VenvEnvironmentManagement(string path, bool ensureExists=false) : E
     {
         if (string.IsNullOrEmpty(path))
         {
-            plan.Logger.LogError("Virtual environment location is not set but it was requested to be created.");
+            plan.Logger?.LogError("Virtual environment location is not set but it was requested to be created.");
             throw new ArgumentNullException(nameof(path), "Virtual environment location is not set.");
         }
         var fullPath = Path.GetFullPath(path);
         if (!Directory.Exists(fullPath))
         {
-            plan.Logger.LogInformation("Creating virtual environment at {VirtualEnvPath} using {PythonBinaryPath}", fullPath, plan.PythonLocation.PythonBinaryPath);
+            plan.Logger?.LogInformation("Creating virtual environment at {VirtualEnvPath} using {PythonBinaryPath}", fullPath, plan.PythonLocation.PythonBinaryPath);
             var (exitCode1, _, _) = await ProcessUtils.ExecutePythonCommandAsync($"-VV", plan);
             var (exitCode2, _, error) = await ProcessUtils.ExecutePythonCommandAsync($"-m venv {fullPath}", plan);
 
             if (exitCode1 != 0 || exitCode2 != 0)
             {
-                plan.Logger.LogError("Failed to create virtual environment.");
+                plan.Logger?.LogError("Failed to create virtual environment.");
                 throw new InvalidOperationException($"Could not create virtual environment. {error}");
             }
         }
         else
         {
-            plan.Logger.LogDebug("Virtual environment already exists at {VirtualEnvPath}", fullPath);
+            plan.Logger?.LogDebug("Virtual environment already exists at {VirtualEnvPath}", fullPath);
         }
     }
 }

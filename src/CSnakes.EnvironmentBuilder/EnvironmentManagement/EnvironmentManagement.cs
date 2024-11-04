@@ -27,7 +27,7 @@ public abstract class EnvironmentManagement
             string suffix = pl.FreeThreaded ? "t" : "";
             sitePackagesPath = Path.Combine(EnvironmentPath, "lib", $"python{pl.Version.Major}.{pl.Version.Minor}{suffix}", "site-packages");
         }
-        plan.Logger.LogDebug("Adding environment site-packages to extra paths: {VenvLibPath}", sitePackagesPath);
+        plan.Logger?.LogDebug("Adding environment site-packages to extra paths: {VenvLibPath}", sitePackagesPath);
         return plan.AddSearchPath(sitePackagesPath);
     }
 

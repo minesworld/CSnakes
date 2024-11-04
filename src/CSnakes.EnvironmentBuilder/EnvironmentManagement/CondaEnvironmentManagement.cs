@@ -13,7 +13,7 @@ public class CondaEnvironmentManagement(string name, CondaLocator conda, string?
         var basePath = GetPath();
         if (!Directory.Exists(basePath))
         {
-            plan.Logger.LogError("Cannot find conda environment at {basePath}.", basePath);
+            plan.Logger?.LogError("Cannot find conda environment at {basePath}.", basePath);
             // TODO: Automate the creation of the conda environments. 
             //var result = conda.ExecuteCondaShellCommand($"env create -n {name} -f {environmentSpecPath}");
             //if (!result)
@@ -24,7 +24,7 @@ public class CondaEnvironmentManagement(string name, CondaLocator conda, string?
         }
         else
         {
-            plan.Logger.LogDebug("Conda environment already exists at {basePath}", basePath);
+            plan.Logger?.LogDebug("Conda environment already exists at {basePath}", basePath);
             // TODO: Check if the environment is up to date
         }
 
