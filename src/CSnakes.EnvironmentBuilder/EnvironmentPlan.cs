@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 
 namespace CSnakes.EnvironmentBuilder;
-public class EnvironmentPlan(ILogger logger, CancellationToken cancellationToken)
+public class EnvironmentPlan(ILogger? logger, CancellationToken cancellationToken)
 {
     public CancellationToken CancellationToken { get => cancellationToken; }
     public ILogger? Logger {  get => logger; }
