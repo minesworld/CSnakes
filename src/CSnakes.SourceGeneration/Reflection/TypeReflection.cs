@@ -43,7 +43,7 @@ public static class TypeReflection
             ("float", _) => SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.DoubleKeyword)),
             ("bool", _) => SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.BoolKeyword)),
             ("bytes", _) => SyntaxFactory.ParseTypeName("byte[]"),
-            ("Buffer" or "typing.Buffer" or "collections.abc.Buffer", ConversionDirection.FromPython) => SyntaxFactory.ParseTypeName("IPyBuffer"),
+            ("Buffer" or "typing.Buffer" or "collections.abc.Buffer", ConversionDirection.FromPython) => SyntaxFactory.ParseTypeName("IPythonBuffer"),
             _ => SyntaxFactory.ParseTypeName("PythonObject"),
         };
     }

@@ -3,7 +3,7 @@ using CSnakes.Runtime.Python;
 using System.Collections;
 
 namespace CSnakes.Runtime;
-internal partial class PyObjectTypeConverter
+internal partial class PythonObjectTypeConverter
 {
     private static object ConvertToDictionary(PythonObject pyObject, Type destinationType, bool useMappingProtocol = false)
     {

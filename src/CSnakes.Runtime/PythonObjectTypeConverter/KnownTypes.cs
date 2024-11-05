@@ -2,7 +2,7 @@
 using System.Collections;
 
 namespace CSnakes.Runtime;
-internal partial class PyObjectTypeConverter
+internal partial class PythonObjectTypeConverter
 {
     static readonly Type listType = typeof(IReadOnlyList<>);
     static readonly Type collectionType = typeof(IEnumerable);

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Runtime.InteropServices;
 
 namespace CSnakes.Runtime;
-internal partial class PyObjectTypeConverter
+internal partial class PythonObjectTypeConverter
 {
     private static object ConvertToList(PythonObject pyObject, Type destinationType)
     {

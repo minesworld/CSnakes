@@ -3,7 +3,7 @@ using CSnakes.Runtime.Python;
 using System.Reflection;
 
 namespace CSnakes.Runtime;
-internal partial class PyObjectTypeConverter
+internal partial class PythonObjectTypeConverter
 {
     internal static object ConvertToGeneratorIterator(PythonObject pyObject, Type destinationType)
     {

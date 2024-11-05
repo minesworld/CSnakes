@@ -1,8 +1,8 @@
 ﻿namespace CSnakes.Runtime.Python.Interns;
 
-internal class ImmortalPyObject : PythonObject
+internal class ImmortalPythonObject : PythonObject
 {
-    internal ImmortalPyObject(nint handle) : base(handle)
+    internal ImmortalPythonObject(nint handle) : base(handle)
     {
     }
 

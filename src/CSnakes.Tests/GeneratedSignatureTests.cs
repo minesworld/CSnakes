@@ -44,7 +44,7 @@ public class GeneratedSignatureTests(TestEnvironment testEnv) : IClassFixture<Te
     [InlineData("def hello(a: Mapping[int, str]) -> typing.Mapping[str, int]:\n ...\n", "IReadOnlyDictionary<string, long> Hello(IReadOnlyDictionary<long, string> a)")]
     [InlineData("def hello() -> Generator[int, str, bool]:\n ...\n", "IGeneratorIterator<long, string, bool> Hello()")]
     [InlineData("def hello() -> typing.Generator[int, str, bool]:\n ...\n", "IGeneratorIterator<long, string, bool> Hello()")]
-    [InlineData("def hello() -> Buffer:\n ...\n", "IPyBuffer Hello()")]
+    [InlineData("def hello() -> Buffer:\n ...\n", "IPythonBuffer Hello()")]
     public void TestGeneratedSignature(string code, string expected)
     {
         var tempName = string.Format("{0}_{1:N}", "test", Guid.NewGuid().ToString("N"));
@@ -79,7 +79,7 @@ public class GeneratedSignatureTests(TestEnvironment testEnv) : IClassFixture<Te
 
             .AddSyntaxTrees(tree);
         var result = compilation.Emit(testEnv.TempDir + "/HelloWorld.dll");
-        // TODO : Log compiler warnings. 
+        // TODO : Log compiler warnings.
         result.Diagnostics.Where(d => d.Severity == DiagnosticSeverity.Error).ToList().ForEach(d => Assert.Fail(d.ToString()));
         Assert.True(result.Success, compiledCode + "\n" + string.Join("\n", result.Diagnostics));
     }

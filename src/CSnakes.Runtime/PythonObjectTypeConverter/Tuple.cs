@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace CSnakes.Runtime;
-internal partial class PyObjectTypeConverter
+internal partial class PythonObjectTypeConverter
 {
     internal static PythonObject ConvertFromTuple(ITuple t)
     {

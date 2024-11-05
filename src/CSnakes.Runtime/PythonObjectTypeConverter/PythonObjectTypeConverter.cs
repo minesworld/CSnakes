@@ -4,7 +4,7 @@ using System.Collections.Concurrent;
 using System.Reflection;
 
 namespace CSnakes.Runtime;
-internal partial class PyObjectTypeConverter
+internal partial class PythonObjectTypeConverter
 {
     private static readonly ConcurrentDictionary<Type, DynamicTypeInfo> knownDynamicTypes = [];
 

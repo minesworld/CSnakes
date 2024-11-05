@@ -175,7 +175,7 @@ public class PythonObject : MPyOPtr, ICloneable
     {
         using (GIL.Acquire())
         {
-            return new PyEnumerable<T>(this);
+            return new PythonEnumerable<T>(this);
         }
     }
 
@@ -318,9 +318,9 @@ public class PythonObject : MPyOPtr, ICloneable
         }
     }
 
-    public static PythonObject None { get; } = new PyNoneObject();
-    public static PythonObject True { get; } = new PyTrueObject();
-    public static PythonObject False { get; } = new PyFalseObject();
+    public static PythonObject None { get; } = new PythonNoneObject();
+    public static PythonObject True { get; } = new PythonTrueObject();
+    public static PythonObject False { get; } = new PythonFalseObject();
 
 
     /// <summary>
@@ -466,7 +466,7 @@ public class PythonObject : MPyOPtr, ICloneable
     {
         using (GIL.Acquire())
         {
-            return PyObjectTypeConverter.ConvertToKeyValuePair<TKey, TValue>(this);
+            return PythonObjectTypeConverter.ConvertToKeyValuePair<TKey, TValue>(this);
         }
     }
 
@@ -483,11 +483,11 @@ public class PythonObject : MPyOPtr, ICloneable
                 var t when t == typeof(double) => CAPI.DoubleFromPyFloat(this),
                 var t when t == typeof(float) => (float)CAPI.DoubleFromPyFloat(this),
                 var t when t == typeof(string) => CAPI.StringFromPyUnicodeToUTF8(this),
-                var t when t == typeof(BigInteger) => PyObjectTypeConverter.ConvertToBigInteger(this, t),
+                var t when t == typeof(BigInteger) => PythonObjectTypeConverter.ConvertToBigInteger(this, t),
                 var t when t == typeof(byte[]) => CAPI.ByteArrayFromPyBytes(this),
-                var t when t.IsAssignableTo(typeof(ITuple)) => PyObjectTypeConverter.ConvertToTuple(this, t),
-                var t when t.IsAssignableTo(typeof(IGeneratorIterator)) => PyObjectTypeConverter.ConvertToGeneratorIterator(this, t),
-                var t => PyObjectTypeConverter.PyObjectToManagedType(this, t),
+                var t when t.IsAssignableTo(typeof(ITuple)) => PythonObjectTypeConverter.ConvertToTuple(this, t),
+                var t when t.IsAssignableTo(typeof(IGeneratorIterator)) => PythonObjectTypeConverter.ConvertToGeneratorIterator(this, t),
+                var t => PythonObjectTypeConverter.PyObjectToManagedType(this, t),
             };
         }
     }
@@ -510,11 +510,11 @@ public class PythonObject : MPyOPtr, ICloneable
                 float f => Create(CAPI.PyFloat_FromDouble((double)f)),
                 string s => Create(CAPI.AsPyUnicodeObject(s)),
                 byte[] bytes => Create(CAPI.ByteSpanToPyBytes(bytes.AsSpan())),
-                IDictionary dictionary => PyObjectTypeConverter.ConvertFromDictionary(dictionary),
-                ITuple t => PyObjectTypeConverter.ConvertFromTuple(t),
-                ICollection l => PyObjectTypeConverter.ConvertFromList(l),
-                IEnumerable e => PyObjectTypeConverter.ConvertFromList(e),
-                BigInteger b => PyObjectTypeConverter.ConvertFromBigInteger(b),
+                IDictionary dictionary => PythonObjectTypeConverter.ConvertFromDictionary(dictionary),
+                ITuple t => PythonObjectTypeConverter.ConvertFromTuple(t),
+                ICollection l => PythonObjectTypeConverter.ConvertFromList(l),
+                IEnumerable e => PythonObjectTypeConverter.ConvertFromList(e),
+                BigInteger b => PythonObjectTypeConverter.ConvertFromBigInteger(b),
                 _ => throw new InvalidCastException($"Cannot convert {value} to PythonObject"),
             };
         }

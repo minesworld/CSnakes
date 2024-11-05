@@ -1,7 +1,7 @@
 ﻿using System.Collections.Concurrent;
 
 namespace CSnakes.Runtime;
-internal partial class PyObjectTypeConverter
+internal partial class PythonObjectTypeConverter
 {
     private static readonly ConcurrentDictionary<(Type, Type), bool> assignableGenericsMap = [];
 

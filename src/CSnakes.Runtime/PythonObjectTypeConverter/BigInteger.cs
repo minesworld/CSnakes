@@ -3,7 +3,7 @@ using CSnakes.Runtime.Python;
 using System.Numerics;
 
 namespace CSnakes.Runtime;
-internal partial class PyObjectTypeConverter
+internal partial class PythonObjectTypeConverter
 {
     internal static BigInteger ConvertToBigInteger(PythonObject pyObject, Type destinationType) =>
         // There is no practical API for this in CPython. Use str() instead. 

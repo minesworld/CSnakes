@@ -3,13 +3,13 @@ using System.Collections;
 
 namespace CSnakes.Runtime.Python;
 
-internal class PyEnumerable<TValue, TImporter> : IEnumerable<TValue>, IEnumerator<TValue>, IDisposable
-    where TImporter : IPyObjectImporter<TValue>
+internal class PythonEnumerable<TValue, TImporter> : IEnumerable<TValue>, IEnumerator<TValue>, IDisposable
+    where TImporter : IPythonObjectImporter<TValue>
 {
     private readonly PythonObject _pyIterator;
     private TValue current = default!;
 
-    internal PyEnumerable(PythonObject pyObject)
+    internal PythonEnumerable(PythonObject pyObject)
     {
         using (GIL.Acquire())
         {
@@ -51,7 +51,7 @@ internal class PyEnumerable<TValue, TImporter> : IEnumerable<TValue>, IEnumerato
     IEnumerator IEnumerable.GetEnumerator() => this;
 }
 
-internal class PyEnumerable<TValue> : PyEnumerable<TValue, PyObjectImporter<TValue>>
+internal class PythonEnumerable<TValue> : PythonEnumerable<TValue, PythonObjectImporter<TValue>>
 {
-    internal PyEnumerable(PythonObject pyObject) : base(pyObject) { }
+    internal PythonEnumerable(PythonObject pyObject) : base(pyObject) { }
 }

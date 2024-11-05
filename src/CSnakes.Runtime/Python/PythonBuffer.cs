@@ -7,7 +7,7 @@ using System.Numerics.Tensors;
 #endif
 
 namespace CSnakes.Runtime.Python;
-internal sealed class PyBuffer : IPyBuffer, IDisposable
+internal sealed class PythonBuffer : IPythonBuffer, IDisposable
 {
     private readonly CAPI.PyBuffer _buffer;
     private bool _disposed;
@@ -47,7 +47,7 @@ internal sealed class PyBuffer : IPyBuffer, IDisposable
         SSizeT = 'N', // C ssize_t
     }
 
-    public unsafe PyBuffer(PythonObject exporter)
+    public unsafe PythonBuffer(PythonObject exporter)
     {
         using (GIL.Acquire())
         {
