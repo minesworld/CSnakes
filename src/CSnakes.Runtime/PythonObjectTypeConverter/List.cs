@@ -11,7 +11,7 @@ internal partial class PyObjectTypeConverter
 
         if (!knownDynamicTypes.TryGetValue(destinationType, out DynamicTypeInfo? typeInfo))
         {
-            Type listType = typeof(PyList<>).MakeGenericType(genericArgument);
+            Type listType = typeof(PythonList<>).MakeGenericType(genericArgument);
             typeInfo = new(listType.GetConstructor([typeof(PythonObject)])!);
             knownDynamicTypes[destinationType] = typeInfo;
         }

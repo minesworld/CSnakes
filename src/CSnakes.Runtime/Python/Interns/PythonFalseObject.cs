@@ -2,9 +2,9 @@
 
 namespace CSnakes.Runtime.Python.Interns;
 
-internal sealed class PyTrueObject : ImmortalPyObject
+internal sealed class PythonFalseObject : ImmortalPythonObject
 {
-    public PyTrueObject() : base(CAPI.PyBool_FromLong(1))
+    public PythonFalseObject() : base(CAPI.PyBool_FromLong(0))
     {
     }
 
@@ -12,7 +12,7 @@ internal sealed class PyTrueObject : ImmortalPyObject
 
     public override string GetRepr() => ToString();
 
-    public override string ToString() => "True";
+    public override string ToString() => "False";
 
     internal override PythonObject Clone() => this;
 }

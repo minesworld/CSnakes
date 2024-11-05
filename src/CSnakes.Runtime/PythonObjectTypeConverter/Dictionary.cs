@@ -12,7 +12,7 @@ internal partial class PyObjectTypeConverter
 
         if (!knownDynamicTypes.TryGetValue(destinationType, out DynamicTypeInfo? typeInfo))
         {
-            Type dictType = typeof(PyDictionary<,>).MakeGenericType(keyType, valueType);
+            Type dictType = typeof(PythonDictionary<,>).MakeGenericType(keyType, valueType);
 
             typeInfo = new(dictType.GetConstructor([typeof(PythonObject)])!);
             knownDynamicTypes[destinationType] = typeInfo;

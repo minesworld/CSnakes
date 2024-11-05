@@ -1,7 +1,7 @@
 ﻿using CSnakes.Runtime.Python;
 
 namespace CSnakes.Runtime.Tests.Python;
-public class PyDictionaryTests : RuntimeTestBase
+public class PythonDictionaryTests : RuntimeTestBase
 {
     [Fact]
     public void TestIndex()
