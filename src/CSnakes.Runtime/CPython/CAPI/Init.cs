@@ -3,10 +3,10 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace CSnakes.Runtime.CPython.Unmanaged;
+namespace CSnakes.Runtime.CPython.CAPI;
 using pyoPtr = nint;
 
-internal unsafe partial class CAPI : IDisposable
+internal unsafe partial class Delegate : IDisposable
 {
     private static Func<string?, Exception> CreateExceptionWrappingPyErrFunc = CreatePlainExceptionWrappingPyErr;
     public static Exception CreateExceptionWrappingPyErr(string? message = null) => CreateExceptionWrappingPyErrFunc(message);
@@ -19,15 +19,15 @@ internal unsafe partial class CAPI : IDisposable
     private static Version PythonVersion = new("0.0.0");
     private bool disposedValue = false;
 
-    public CAPI(string pythonLibraryPath, Version version, Func<string?, Exception>? createExceptionWrappingPyErrFunc = null)
+    public Delegate(string pythonLibraryPath, Version version, Func<string?, Exception>? createExceptionWrappingPyErrFunc = null)
     {
         PythonVersion = version;
-        CAPI.pythonLibraryPath = pythonLibraryPath;
+        Delegate.pythonLibraryPath = pythonLibraryPath;
         CreateExceptionWrappingPyErrFunc = (createExceptionWrappingPyErrFunc != null) ? createExceptionWrappingPyErrFunc : CreatePlainExceptionWrappingPyErr;
 
         try
         {
-            NativeLibrary.SetDllImportResolver(typeof(CAPI).Assembly, DllImportResolver);
+            NativeLibrary.SetDllImportResolver(typeof(Delegate).Assembly, DllImportResolver);
         }
         catch (InvalidOperationException)
         {

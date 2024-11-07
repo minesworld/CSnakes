@@ -7,7 +7,7 @@ namespace CSnakes.Runtime;
 
 public class CPythonEnvironment
 {
-    private readonly CAPI api;
+    private readonly CPython.API api;
     private bool disposedValue;
 
     protected static CPythonEnvironment? pythonEnvironment;
@@ -17,7 +17,7 @@ public class CPythonEnvironment
     {
         get
         {
-            return CAPI.Py_GetVersion() ?? "No version available";
+            return API.Py_GetVersion() ?? "No version available";
         }
     }
 
@@ -43,7 +43,7 @@ public class CPythonEnvironment
     }
 
 
-    private CAPI SetupStandardLibrary(EnvironmentPlan plan, ILogger? logger=null)
+    private API SetupStandardLibrary(EnvironmentPlan plan, ILogger? logger=null)
     {
         string pythonDll = plan.PythonLocation.LibPythonPath;
         string pythonPath = plan.GetPythonPath();
@@ -51,7 +51,7 @@ public class CPythonEnvironment
         logger?.LogDebug("Python DLL: {PythonDLL}", pythonDll);
         logger?.LogDebug("Python path: {PythonPath}", pythonPath);
 
-        var api = new CAPI(pythonDll, plan.PythonLocation.Version, PythonObject.CreatePythonExceptionWrappingPyErr)
+        var api = new API(pythonDll, plan.PythonLocation.Version, PythonObject.CreatePythonExceptionWrappingPyErr)
         {
             PythonPath = pythonPath
         };

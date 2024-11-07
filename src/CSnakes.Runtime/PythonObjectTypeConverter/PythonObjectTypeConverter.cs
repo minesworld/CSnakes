@@ -10,28 +10,28 @@ internal partial class PythonObjectTypeConverter
 
     public static object PyObjectToManagedType(PythonObject pyObject, Type destinationType)
     {
-        if (CAPI.IsPyDict(pyObject) && IsAssignableToGenericType(destinationType, dictionaryType))
+        if (API.IsPyDict(pyObject) && IsAssignableToGenericType(destinationType, dictionaryType))
         {
             return ConvertToDictionary(pyObject, destinationType);
         }
 
-        if (CAPI.IsPyList(pyObject) && IsAssignableToGenericType(destinationType, listType))
+        if (API.IsPyList(pyObject) && IsAssignableToGenericType(destinationType, listType))
         {
             return ConvertToList(pyObject, destinationType);
         }
 
         // This needs to come after lists, because sequences are also maps
-        if (CAPI.IsPyMappingWithItems(pyObject) && destinationType.IsAssignableTo(collectionType))
+        if (API.IsPyMappingWithItems(pyObject) && destinationType.IsAssignableTo(collectionType))
         {
             return ConvertToDictionary(pyObject, destinationType, useMappingProtocol: true);
         }
 
-        if (CAPI.IsPySequence(pyObject) && IsAssignableToGenericType(destinationType, listType))
+        if (API.IsPySequence(pyObject) && IsAssignableToGenericType(destinationType, listType))
         {
             return ConvertToList(pyObject, destinationType);
         }
 
-        if (CAPI.IsBuffer(pyObject) && destinationType.IsAssignableTo(bufferType))
+        if (API.IsBuffer(pyObject) && destinationType.IsAssignableTo(bufferType))
         {
             return new PythonBuffer(pyObject);
         }

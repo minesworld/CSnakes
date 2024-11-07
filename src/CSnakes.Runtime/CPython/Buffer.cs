@@ -1,9 +1,9 @@
 ﻿using CSnakes.Runtime.Python;
 
 namespace CSnakes.Runtime.CPython;
-internal unsafe partial class CAPI
+internal unsafe partial class API
 {
-    internal static PyBuffer GetBuffer(MPyOPtr p)
+    internal static PyBuffer GetBuffer(ReferenceObject p)
     {
         PyBuffer? view = GetBuffer(p.DangerousGetHandle());
         if (view == null)
@@ -12,7 +12,7 @@ internal unsafe partial class CAPI
         }
         else
         {
-            return (Unmanaged.CAPI.PyBuffer)view;
+            return (API.PyBuffer)view;
         }
     }
 

@@ -7,7 +7,7 @@ internal partial class PythonObjectTypeConverter
 {
     internal static object ConvertToGeneratorIterator(PythonObject pyObject, Type destinationType)
     {
-        if (!CAPI.IsPyGenerator(pyObject))
+        if (!API.IsPyGenerator(pyObject))
         {
             throw new InvalidCastException($"Cannot convert {pyObject.GetPythonType()} to a generator.");
         }

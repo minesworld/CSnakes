@@ -38,15 +38,15 @@ internal static class Pack
         //
         // Source: https://docs.python.org/3/c-api/list.html#c.PyList_New
 
-        public static IntPtr New(IntPtr size) => CAPI.PyList_New(size);
-        public static int SetItemRaw(IntPtr ob, IntPtr pos, IntPtr o) => CAPI.PyList_SetItem(ob, pos, o);
+        public static IntPtr New(IntPtr size) => API.PyList_New(size);
+        public static int SetItemRaw(IntPtr ob, IntPtr pos, IntPtr o) => API.PyList_SetItem(ob, pos, o);
     }
 
     private sealed class TupleBuilder : IListOrTupleBuilder
     {
         private TupleBuilder() { }
-        public static IntPtr New(IntPtr size) => size == 0 ? CAPI.GetPyEmptyTuple() : CAPI.PyTuple_New(size);
-        public static int SetItemRaw(IntPtr ob, IntPtr pos, IntPtr o) => CAPI.SetItemInPyTuple(ob, pos, o);
+        public static IntPtr New(IntPtr size) => size == 0 ? API.GetPyEmptyTuple() : API.PyTuple_New(size);
+        public static int SetItemRaw(IntPtr ob, IntPtr pos, IntPtr o) => API.SetItemInPyTuple(ob, pos, o);
     }
 
     const int FixedArrayLength = 8;
@@ -136,7 +136,7 @@ internal static class Pack
         {
             if (obj != 0)
             {
-                CAPI.Py_DecRef(obj);
+                API.Py_DecRef(obj);
             }
 
             throw;

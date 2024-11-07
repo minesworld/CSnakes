@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 namespace CSnakes.Runtime.Python;
 public class IsType
 {
-    public static bool IsBytes(PythonObject p) => CAPI.IsInstance(p, CAPI.PtrToPyBytesType);
+    public static bool IsBytes(PythonObject p) => API.IsInstance(p, API.PtrToPyBytesType);
 }

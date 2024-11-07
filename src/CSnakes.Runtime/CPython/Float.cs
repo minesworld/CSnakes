@@ -1,7 +1,7 @@
 ﻿namespace CSnakes.Runtime.CPython;
 
-internal unsafe partial class CAPI
+internal unsafe partial class API
 {
-    internal static double DoubleFromPyFloat(MPyOPtr p) => DoubleFromPyFloat(p.DangerousGetHandle());
+    internal static double DoubleFromPyFloat(ReferenceObject p) => DoubleFromPyFloat(p.DangerousGetHandle());
 
 }

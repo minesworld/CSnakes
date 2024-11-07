@@ -4,7 +4,7 @@ namespace CSnakes.Runtime.Python.Interns;
 
 internal sealed class PythonTrueObject : ImmortalPythonObject
 {
-    public PythonTrueObject() : base(CAPI.PyBool_FromLong(1))
+    public PythonTrueObject() : base(API.PyBool_FromLong(1))
     {
     }
 

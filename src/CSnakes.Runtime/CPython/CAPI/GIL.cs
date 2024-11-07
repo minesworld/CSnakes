@@ -1,8 +1,8 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace CSnakes.Runtime.CPython.Unmanaged;
+namespace CSnakes.Runtime.CPython.CAPI;
 
-internal unsafe partial class CAPI
+internal unsafe partial class Delegate
 {
     internal static int GetNativeThreadId()
     {

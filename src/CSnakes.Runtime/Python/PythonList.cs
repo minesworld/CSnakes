@@ -19,7 +19,7 @@ internal class PythonList<TItem>(PythonObject listObject) : IReadOnlyList<TItem>
 
             using (GIL.Acquire())
             {
-                using PythonObject value = PythonObject.Create(CAPI.PySequence_GetItem(listObject, index));
+                using PythonObject value = PythonObject.Create(API.PySequence_GetItem(listObject, index));
                 TItem result = value.As<TItem>();
                 _convertedItems[index] = result;
                 return result;
@@ -33,7 +33,7 @@ internal class PythonList<TItem>(PythonObject listObject) : IReadOnlyList<TItem>
         {
             using (GIL.Acquire())
             {
-                return (int)CAPI.PySequence_Size(listObject);
+                return (int)API.PySequence_Size(listObject);
             }
         }
     }

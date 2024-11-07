@@ -1,9 +1,9 @@
 ﻿using CSnakes.Runtime.Python;
 
-namespace CSnakes.Runtime.CPython.Unmanaged;
+namespace CSnakes.Runtime.CPython.CAPI;
 using pyoPtr = nint;
 
-internal unsafe partial class CAPI
+internal unsafe partial class Delegate
 {
     /// <summary>
     /// Calls PyLong_AsLongLong and throws a Python Exception if an error occurs.

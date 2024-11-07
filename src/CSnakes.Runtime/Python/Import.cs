@@ -6,7 +6,7 @@ public static class Import
 {
     public static PythonObject ImportModule(string module)
     {
-        return PythonObject.Create(CAPI.Import(module));
+        return PythonObject.Create(API.Import(module));
     }
 
     public static PythonObject CreateAndImportModuleFromSource(string name, string source, string filename = "<string>")
@@ -14,7 +14,7 @@ public static class Import
         PythonObject result;
         using (GIL.Acquire())
         {
-            result = PythonObject.Steal(CAPI.AddCodeAsModule(source, name, filename));
+            result = PythonObject.Steal(API.AddCodeAsModule(source, name, filename));
         }
 
         return result;

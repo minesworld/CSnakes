@@ -23,11 +23,11 @@ internal partial class PythonObjectTypeConverter
 
     internal static PythonObject ConvertFromDictionary(IDictionary dictionary)
     {
-        PythonObject pyDict = PythonObject.Create(CAPI.PyDict_New());
+        PythonObject pyDict = PythonObject.Create(API.PyDict_New());
 
         foreach (DictionaryEntry kvp in dictionary)
         {
-            int result = CAPI.PyDict_SetItem(pyDict, PythonObject.From(kvp.Key), PythonObject.From(kvp.Value));
+            int result = API.PyDict_SetItem(pyDict, PythonObject.From(kvp.Key), PythonObject.From(kvp.Value));
             if (result == -1)
             {
                 throw PythonObject.CreatePythonExceptionWrappingPyErr();

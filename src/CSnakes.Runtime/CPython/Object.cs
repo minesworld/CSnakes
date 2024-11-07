@@ -3,9 +3,9 @@
 namespace CSnakes.Runtime.CPython;
 using pyoPtr = nint;
 
-internal unsafe partial class CAPI
+internal unsafe partial class API
 {
-    internal static bool IsInstance(MPyOPtr ob, pyoPtr type)
+    internal static bool IsInstance(ReferenceObject ob, pyoPtr type)
     {
         int result = PyObject_IsInstance(ob, type);
         if (result == -1)
@@ -15,15 +15,15 @@ internal unsafe partial class CAPI
         return result == 1;
     }
 
-    internal static pyoPtr GetAttr(MPyOPtr ob, string name) => GetAttr(ob.DangerousGetHandle(), name);
-    internal static pyoPtr GetAttr(MPyOPtr ob, pyoPtr name) => GetAttr(ob.DangerousGetHandle(), name);
-    internal static pyoPtr GetAttr(MPyOPtr ob, MPyOPtr name) => GetAttr(ob.DangerousGetHandle(), name.DangerousGetHandle());
+    internal static pyoPtr GetAttr(ReferenceObject ob, string name) => GetAttr(ob.DangerousGetHandle(), name);
+    internal static pyoPtr GetAttr(ReferenceObject ob, pyoPtr name) => GetAttr(ob.DangerousGetHandle(), name);
+    internal static pyoPtr GetAttr(ReferenceObject ob, ReferenceObject name) => GetAttr(ob.DangerousGetHandle(), name.DangerousGetHandle());
 
-    internal static bool HasAttr(MPyOPtr ob, string name) => HasAttr(ob.DangerousGetHandle(), name);
-    internal static bool HasAttr(MPyOPtr ob, pyoPtr name) => HasAttr(ob.DangerousGetHandle(), name);
-    internal static bool HasAttr(MPyOPtr ob, MPyOPtr name) => HasAttr(ob.DangerousGetHandle(), name.DangerousGetHandle());
+    internal static bool HasAttr(ReferenceObject ob, string name) => HasAttr(ob.DangerousGetHandle(), name);
+    internal static bool HasAttr(ReferenceObject ob, pyoPtr name) => HasAttr(ob.DangerousGetHandle(), name);
+    internal static bool HasAttr(ReferenceObject ob, ReferenceObject name) => HasAttr(ob.DangerousGetHandle(), name.DangerousGetHandle());
 
-    internal static bool RichComparePyObjects(MPyOPtr ob1, MPyOPtr ob2, RichComparisonType comparisonType)
+    internal static bool RichComparePyObjects(ReferenceObject ob1, ReferenceObject ob2, RichComparisonType comparisonType)
     {
         int result = PyObject_RichCompareBool(ob1, ob2, comparisonType);
         if (result == -1)

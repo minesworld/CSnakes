@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
-namespace CSnakes.Runtime.CPython.Unmanaged;
+namespace CSnakes.Runtime.CPython.CAPI;
 
 [CustomMarshaller(typeof(string), MarshalMode.Default, typeof(NonFreeUtf8StringMarshaller))]
 internal static unsafe class NonFreeUtf8StringMarshaller

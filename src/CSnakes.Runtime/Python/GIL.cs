@@ -35,8 +35,8 @@ public static class GIL
 
         public PyGilState()
         {
-            Debug.Assert(CAPI.IsInitialized);
-            gilState = CAPI.PyGILState_Ensure();
+            Debug.Assert(API.IsInitialized);
+            gilState = API.PyGILState_Ensure();
             recursionCount = 1;
         }
 
@@ -44,7 +44,7 @@ public static class GIL
         {
             if (recursionCount == 0)
             {
-                gilState = CAPI.PyGILState_Ensure();
+                gilState = API.PyGILState_Ensure();
             }
             recursionCount++;
         }
@@ -60,9 +60,9 @@ public static class GIL
             GC.SuppressFinalize(this);
             while (handlesToDispose.TryDequeue(out nint handle))
             {
-                CAPI.Py_DecRef(handle);
+                API.Py_DecRef(handle);
             }
-            CAPI.PyGILState_Release(gilState);
+            API.PyGILState_Release(gilState);
         }
 
         public int RecursionCount => recursionCount;

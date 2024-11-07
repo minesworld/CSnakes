@@ -4,7 +4,7 @@ namespace CSnakes.Runtime.Python.Interns;
 
 internal sealed class PythonNoneObject : ImmortalPythonObject
 {
-    public PythonNoneObject() : base(CAPI.GetNone())
+    public PythonNoneObject() : base(API.GetNone())
     {
     }
 

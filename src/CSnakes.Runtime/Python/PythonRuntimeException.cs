@@ -1,7 +1,6 @@
 ﻿using CSnakes.Runtime.CPython;
-using CSnakes.Runtime.Python;
 
-namespace CSnakes.Runtime;
+namespace CSnakes.Runtime.Python;
 public class PythonRuntimeException : Exception
 {
     private readonly PythonObject? pythonTracebackObject;
@@ -48,7 +47,7 @@ public class PythonRuntimeException : Exception
 
     private static string[] FormatPythonStackTrace(PythonObject pythonStackTrace)
     {
-        if (!CAPI.IsInitialized)
+        if (!API.IsInitialized)
         {
             return [];
         }
