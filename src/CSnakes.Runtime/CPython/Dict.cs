@@ -17,7 +17,7 @@ internal unsafe partial class CAPI
         var result = PyDict_GetItem(dict.DangerousGetHandle(), key.DangerousGetHandle());
         if (result == IntPtr.Zero)
         {
-            throw PythonObject.ThrowPythonExceptionAsClrException();
+            throw CreateExceptionWrappingPyErr();
         }
         Py_IncRef(result);
         return result;
@@ -34,7 +34,7 @@ internal unsafe partial class CAPI
         int result = PyDict_Contains(dict.DangerousGetHandle(), key.DangerousGetHandle());
         if(result == -1)
         {
-            throw PythonObject.ThrowPythonExceptionAsClrException();
+            throw CreateExceptionWrappingPyErr();
         }
         return result == 1;
     }

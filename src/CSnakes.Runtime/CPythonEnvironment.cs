@@ -1,4 +1,5 @@
 ﻿using CSnakes.Runtime.CPython;
+using CSnakes.Runtime.Python;
 using CSnakes.EnvironmentBuilder;
 using Microsoft.Extensions.Logging;
 
@@ -50,7 +51,7 @@ public class CPythonEnvironment
         logger?.LogDebug("Python DLL: {PythonDLL}", pythonDll);
         logger?.LogDebug("Python path: {PythonPath}", pythonPath);
 
-        var api = new CAPI(pythonDll, plan.PythonLocation.Version)
+        var api = new CAPI(pythonDll, plan.PythonLocation.Version, PythonObject.CreatePythonExceptionWrappingPyErr)
         {
             PythonPath = pythonPath
         };

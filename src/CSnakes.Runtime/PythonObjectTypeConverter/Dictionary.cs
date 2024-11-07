@@ -30,7 +30,7 @@ internal partial class PythonObjectTypeConverter
             int result = CAPI.PyDict_SetItem(pyDict, PythonObject.From(kvp.Key), PythonObject.From(kvp.Value));
             if (result == -1)
             {
-                throw PythonObject.ThrowPythonExceptionAsClrException();
+                throw PythonObject.CreatePythonExceptionWrappingPyErr();
             }
         }
 

@@ -19,7 +19,7 @@ public class MPyOPtr : SafeHandle
         if (pyObjectPtr == IntPtr.Zero)
         {
             // TODO: throw if there is an CPythonException otherwise a normal C# Exception... 
-            throw PythonObject.ThrowPythonExceptionAsClrException();
+            throw CAPI.CreateExceptionWrappingPyErr();
         }
 
 
@@ -145,7 +145,7 @@ public class MPyOPtr : SafeHandle
         var result = CAPI.PyObject_RichCompareBool(left.DangerousGetHandle(), right.DangerousGetHandle(), type);
         if (result == -1)
         {
-            throw PythonObject.ThrowPythonExceptionAsClrException();
+            throw CAPI.CreateExceptionWrappingPyErr();
         }
         return result == 1;
     }

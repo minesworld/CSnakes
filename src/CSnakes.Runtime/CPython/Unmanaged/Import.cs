@@ -14,7 +14,7 @@ internal unsafe partial class CAPI
         pyoPtr attr = PyObject_GetAttr(module, pyAttrName);
         if (attr == IntPtr.Zero)
         {
-            throw PythonObject.ThrowPythonExceptionAsClrException();
+            throw CreateExceptionWrappingPyErr();
         }
         Py_DecRef(pyName);
         Py_DecRef(pyAttrName);
@@ -37,7 +37,7 @@ internal unsafe partial class CAPI
 
         if (pyoPtrCompiledCode == IntPtr.Zero)
         {
-            throw PythonObject.ThrowPythonExceptionAsClrException();
+            throw CreateExceptionWrappingPyErr();
         }
 
         // Execute the compiled code within the module's dictionary
@@ -51,7 +51,7 @@ internal unsafe partial class CAPI
 
         if (pyoPtrModule == IntPtr.Zero)
         {
-            throw PythonObject.ThrowPythonExceptionAsClrException();
+            throw CreateExceptionWrappingPyErr();
         }
 
         return pyoPtrModule;

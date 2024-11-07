@@ -15,7 +15,7 @@ internal unsafe partial class CAPI
         long result = PyLong_AsLongLong(p);
         if (result == -1 && PyErr_Occurred() != IntPtr.Zero)
         {
-            throw PythonObject.ThrowPythonExceptionAsClrException("Error converting Python object to int, check that the object was a Python int or that the value wasn't too large. See InnerException for details.");
+            throw CreateExceptionWrappingPyErr  ("Error converting Python object to int, check that the object was a Python int or that the value wasn't too large. See InnerException for details.");
         }
         return result;
     }
@@ -30,7 +30,7 @@ internal unsafe partial class CAPI
         long result = PyLong_AsLong(p);
         if (result == -1 && PyErr_Occurred() != IntPtr.Zero)
         {
-            throw PythonObject.ThrowPythonExceptionAsClrException("Error converting Python object to int, check that the object was a Python int or that the value wasn't too large. See InnerException for details.");
+            throw CreateExceptionWrappingPyErr("Error converting Python object to int, check that the object was a Python int or that the value wasn't too large. See InnerException for details.");
         }
         return result;
     }

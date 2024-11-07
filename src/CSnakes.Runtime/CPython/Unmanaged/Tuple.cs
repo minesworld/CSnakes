@@ -63,7 +63,7 @@ internal unsafe partial class CAPI
         nint item = PyTuple_GetItem(ob, pos);
         if (item == IntPtr.Zero)
         {
-            throw PythonObject.ThrowPythonExceptionAsClrException();
+            throw CreateExceptionWrappingPyErr();
         }
         Py_IncRef(item);
         return item;

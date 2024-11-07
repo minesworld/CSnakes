@@ -8,7 +8,7 @@ internal unsafe partial class CAPI
         PyBuffer? view = GetBuffer(p.DangerousGetHandle());
         if (view == null)
         {
-            throw PythonObject.ThrowPythonExceptionAsClrException();
+            throw CreateExceptionWrappingPyErr();
         }
         else
         {

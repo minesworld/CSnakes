@@ -75,17 +75,12 @@ public class PythonObject : MPyOPtr, ICloneable
     /// </summary>
     /// <exception cref="InvalidDataException"></exception>
     /// <exception cref="PythonInvocationException"></exception>
-    internal static Exception ThrowPythonExceptionAsClrException(string? message = null)
+    ///
+    internal static Exception CreatePythonExceptionWrappingPyErr(string? message = null)
     {
         using (GIL.Acquire())
         {
-            if (!CAPI.IsPyErrOccurred())
-            {
-                return new InvalidDataException("An error occurred in Python, but no exception was set.");
-            }
-            CAPI.PyErr_Fetch(out nint excType, out nint excValue, out nint excTraceback);
-
-            if (excType == 0)
+            if (CAPI.FetchAndClearPyErr(out nint excType, out nint excValue, out nint excTraceback) == false)
             {
                 return new InvalidDataException("An error occurred in Python, but no exception was set.");
             }
@@ -96,14 +91,10 @@ public class PythonObject : MPyOPtr, ICloneable
 
             // TODO: Consider adding __qualname__ as well for module exceptions that aren't builtins
             var pyExceptionTypeStr = pyExceptionType.GetAttr("__name__").ToString();
-            CAPI.PyErr_Clear();
 
-            if (string.IsNullOrEmpty(message))
-            {
-                return new PythonInvocationException(pyExceptionTypeStr, pyException, pyExceptionTraceback);
-            }
-
-            return new PythonInvocationException(pyExceptionTypeStr, pyException, pyExceptionTraceback, message);
+            return string.IsNullOrEmpty(message)
+              ? new PythonInvocationException(pyExceptionTypeStr, pyException, pyExceptionTraceback)
+              : new PythonInvocationException(pyExceptionTypeStr, pyException, pyExceptionTraceback, message);
         }
     }
 
@@ -312,7 +303,7 @@ public class PythonObject : MPyOPtr, ICloneable
             int hash = CAPI.PyObject_Hash(this);
             if (hash == -1)
             {
-                throw ThrowPythonExceptionAsClrException();
+                throw CreatePythonExceptionWrappingPyErr();
             }
             return hash;
         }

@@ -21,7 +21,7 @@ internal unsafe partial class CAPI
     internal static string StringFromPyUnicodeToUTF8(pyoPtr s)
     {
         var bytes = PyUnicode_AsUTF8(s);
-        if (bytes is null) throw PythonObject.ThrowPythonExceptionAsClrException();
+        if (bytes is null) throw CreateExceptionWrappingPyErr();
         var result = NonFreeUtf8StringMarshaller.ConvertToManaged(bytes);
         if (result is null) throw new Exception("xxx");
         return result;

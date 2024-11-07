@@ -14,7 +14,7 @@ internal unsafe partial class CAPI
             int result = PyDict_SetItem(dict, keyObj, kwvalues[i]);
             if (result == -1)
             {
-                throw PythonObject.ThrowPythonExceptionAsClrException();
+                throw CreateExceptionWrappingPyErr();
             }
             Py_DecRef(keyObj);
         }

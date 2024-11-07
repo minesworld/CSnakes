@@ -41,7 +41,7 @@ internal unsafe partial class CAPI
         int result = PyObject_RichCompareBool(ob1, ob2, comparisonType);
         if (result == -1)
         {
-            throw PythonObject.ThrowPythonExceptionAsClrException();
+            throw CreateExceptionWrappingPyErr();
         }
         return result == 1;
     }

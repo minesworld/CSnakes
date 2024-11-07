@@ -125,7 +125,7 @@ internal static class Pack
                     int result = TBuilder.SetItemRaw(obj, i++, handle);
                     if (result == -1)
                     {
-                        throw PythonObject.ThrowPythonExceptionAsClrException();
+                        throw PythonObject.CreatePythonExceptionWrappingPyErr();
                     }
                 }
 

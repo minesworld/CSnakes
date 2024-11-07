@@ -10,12 +10,12 @@ internal unsafe partial class CAPI
         var pyoPtrSysName = AsPyUnicodeObject("sys");
         var pyoPtrSysModule = PyImport_Import(pyoPtrSysName);
         Py_DecRef(pyoPtrSysModule);
-        if (pyoPtrSysModule == IntPtr.Zero) PythonObject.ThrowPythonExceptionAsClrException();
+        if (pyoPtrSysModule == IntPtr.Zero) CreateExceptionWrappingPyErr();
 
         var pyoPtrPathAttr = AsPyUnicodeObject("path");
         var pyoPtrPathList = PyObject_GetAttr(pyoPtrSysModule, pyoPtrPathAttr);
         Py_DecRef(pyoPtrPathAttr);
-        if (pyoPtrSysModule == IntPtr.Zero) PythonObject.ThrowPythonExceptionAsClrException();
+        if (pyoPtrSysModule == IntPtr.Zero) CreateExceptionWrappingPyErr();
 
         foreach (var path in paths)
         {

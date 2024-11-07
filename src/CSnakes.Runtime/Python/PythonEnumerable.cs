@@ -32,7 +32,7 @@ internal class PythonEnumerable<TValue, TImporter> : IEnumerable<TValue>, IEnume
             nint result = CAPI.PyIter_Next(_pyIterator);
             if (result == IntPtr.Zero && CAPI.IsPyErrOccurred())
             {
-                throw PythonObject.ThrowPythonExceptionAsClrException();
+                throw PythonObject.CreatePythonExceptionWrappingPyErr();
             }
 
             if (result == IntPtr.Zero)

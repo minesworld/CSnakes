@@ -10,7 +10,7 @@ internal unsafe partial class CAPI
         double result = PyFloat_AsDouble(p);
         if (result == -1 && PyErr_Occurred() != IntPtr.Zero)
         {
-            throw PythonObject.ThrowPythonExceptionAsClrException("Error converting Python object to double, check that the object was a Python float. See InnerException for details.");
+            throw CreateExceptionWrappingPyErr("Error converting Python object to double, check that the object was a Python float. See InnerException for details.");
         }
         return result;
     }
