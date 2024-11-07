@@ -2,7 +2,7 @@
 
 namespace CSnakes.Runtime.CPython.CAPI;
 
-internal unsafe partial class Delegate
+internal unsafe partial class Proxy
 {
     internal static int GetNativeThreadId()
     {

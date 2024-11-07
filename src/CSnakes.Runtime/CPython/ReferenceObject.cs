@@ -140,7 +140,7 @@ public class ReferenceObject : SafeHandle
         };
     }
 
-    private static bool Compare(ReferenceObject left, ReferenceObject right, CAPI.Delegate.RichComparisonType type)
+    private static bool Compare(ReferenceObject left, ReferenceObject right, CAPI.Proxy.RichComparisonType type)
     {
         var result = API.PyObject_RichCompareBool(left.DangerousGetHandle(), right.DangerousGetHandle(), type);
         if (result == -1)

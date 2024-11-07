@@ -3,7 +3,7 @@
 namespace CSnakes.Runtime.CPython.CAPI;
 using pyoPtr = nint;
 
-internal unsafe partial class Delegate
+internal unsafe partial class Proxy
 {
     internal static nint PackDict(Span<string> kwnames, Span<pyoPtr> kwvalues)
     {
