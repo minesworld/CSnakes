@@ -1,7 +1,6 @@
-﻿using CSnakes.Runtime.Python;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
-namespace CSnakes.Runtime;
+namespace CSnakes.Runtime.Python;
 
 [DebuggerDisplay("Exception Type={PythonExceptionType,nq}, Message={Message,nq}")]
 public class PythonInvocationException : Exception
