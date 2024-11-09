@@ -3,7 +3,7 @@
 namespace CSnakes.Runtime.CPython;
 using pyoPtr = nint;
 
-internal unsafe partial class API
+public unsafe partial class API
 {
     #region PyObject
     [LibraryImport(PythonLibraryName)]

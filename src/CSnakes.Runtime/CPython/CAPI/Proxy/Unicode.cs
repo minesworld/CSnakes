@@ -1,11 +1,9 @@
-﻿using CSnakes.Runtime.Python;
-
-namespace CSnakes.Runtime.CPython.CAPI;
+﻿namespace CSnakes.Runtime.CPython.CAPI;
 using pyoPtr = nint;
 
-internal unsafe partial class Proxy
+public unsafe partial class Proxy
 {
-    internal static pyoPtr AsPyUnicodeObject(string s)
+    public static pyoPtr AsPyUnicodeObject(string s)
     {
         fixed (char* c = s)
         {
@@ -18,7 +16,7 @@ internal unsafe partial class Proxy
     /// </summary>
     /// <param name="s"></param>
     /// <returns></returns>
-    internal static string StringFromPyUnicodeToUTF8(pyoPtr s)
+    public static string StringFromPyUnicodeToUTF8(pyoPtr s)
     {
         var bytes = PyUnicode_AsUTF8(s);
         if (bytes is null) throw CreateExceptionWrappingPyErr();

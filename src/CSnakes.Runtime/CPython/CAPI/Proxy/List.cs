@@ -1,9 +1,7 @@
-﻿using CSnakes.Runtime.Python;
-
-namespace CSnakes.Runtime.CPython.CAPI;
+﻿namespace CSnakes.Runtime.CPython.CAPI;
 using pyoPtr = nint;
 
-internal unsafe partial class Proxy
+public unsafe partial class Proxy
 {
     /// <summary>
     /// Get a reference to the item at `pos` in the list
@@ -11,7 +9,7 @@ internal unsafe partial class Proxy
     /// <param name="obj">The list object</param>
     /// <param name="pos">The position as ssize_t</param>
     /// <returns>New reference to the list item</returns>
-    internal static pyoPtr GetItemOfPyList(pyoPtr obj, nint pos)
+    public static pyoPtr GetItemOfPyList(pyoPtr obj, nint pos)
     {
         nint item = PyList_GetItem(obj, pos);
         if (item == IntPtr.Zero)
@@ -23,7 +21,7 @@ internal unsafe partial class Proxy
     }
 
 
-    internal static int SetItemInPyList(pyoPtr ob, nint pos, pyoPtr o)
+    public static int SetItemInPyList(pyoPtr ob, nint pos, pyoPtr o)
     {
         int result = PyList_SetItem(ob, pos, o);
         if (result != -1)

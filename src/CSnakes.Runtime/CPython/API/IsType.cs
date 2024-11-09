@@ -1,5 +1,5 @@
 ﻿namespace CSnakes.Runtime.CPython;
-internal unsafe partial class API
+public unsafe partial class API
 {
     #region PyBytes
     public static bool IsBytes(ReferenceObject ob) => IsInstance(ob, _PyBytesType);

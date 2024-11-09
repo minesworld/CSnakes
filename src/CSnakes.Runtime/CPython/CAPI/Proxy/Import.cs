@@ -1,12 +1,9 @@
-﻿using CSnakes.Runtime.Python;
-using System.Xml.Linq;
-
-namespace CSnakes.Runtime.CPython.CAPI;
+﻿namespace CSnakes.Runtime.CPython.CAPI;
 using pyoPtr = nint;
 
-internal unsafe partial class Proxy
+public unsafe partial class Proxy
 {
-    protected static pyoPtr GetBuiltin(string name)
+    public static pyoPtr GetBuiltin(string name)
     {
         pyoPtr pyName = AsPyUnicodeObject("builtins");
         pyoPtr pyAttrName = AsPyUnicodeObject(name);

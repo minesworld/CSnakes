@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 namespace CSnakes.Runtime.CPython.CAPI;
 using pyoPtr = nint;
 
-internal unsafe partial class Proxy : IDisposable
+public unsafe partial class Proxy : IDisposable
 {
     private static Func<string?, Exception> CreateExceptionWrappingPyErrFunc = CreatePlainExceptionWrappingPyErr;
     public static Exception CreateExceptionWrappingPyErr(string? message = null) => CreateExceptionWrappingPyErrFunc(message);
@@ -65,7 +65,7 @@ internal unsafe partial class Proxy : IDisposable
         return NativeLibrary.Load(libraryName, assembly, searchPath);
     }
 
-    internal void Initialize()
+    public void Initialize()
     {
         if (IsInitialized)
             return;

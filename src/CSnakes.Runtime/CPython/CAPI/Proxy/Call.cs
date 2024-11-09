@@ -1,9 +1,9 @@
 ﻿namespace CSnakes.Runtime.CPython.CAPI;
 using pyoPtr = nint;
 
-internal unsafe partial class Proxy
+public unsafe partial class Proxy
 {
-    internal static nint Call(pyoPtr callable, Span<pyoPtr> args)
+    public static nint Call(pyoPtr callable, Span<pyoPtr> args)
     {
         // These options are used for efficiency. Don't create a tuple if its not required. 
         if (args.Length == 0)
@@ -30,7 +30,7 @@ internal unsafe partial class Proxy
         }
     }
 
-    internal static IntPtr Call(pyoPtr callable, Span<pyoPtr> args, Span<string> kwnames, Span<pyoPtr> kwvalues)
+    public static IntPtr Call(pyoPtr callable, Span<pyoPtr> args, Span<string> kwnames, Span<pyoPtr> kwvalues)
     {
         // These options are used for efficiency. Don't create a tuple if its not required. 
         if (false /* TODO: Implement vectorcall for kwargs*/ && 

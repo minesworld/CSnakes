@@ -2,9 +2,9 @@
 
 namespace CSnakes.Runtime.CPython.CAPI;
 
-internal unsafe partial class Proxy
+public unsafe partial class Proxy
 {
-    internal static int GetNativeThreadId()
+    public static int GetNativeThreadId()
     {
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             return GetCurrentThreadId();

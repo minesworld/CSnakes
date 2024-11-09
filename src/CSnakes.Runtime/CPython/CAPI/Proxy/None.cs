@@ -1,13 +1,13 @@
 ﻿namespace CSnakes.Runtime.CPython.CAPI;
 using pyoPtr = nint;
 
-internal unsafe partial class Proxy
+public unsafe partial class Proxy
 {
     /// <summary>
     /// Get the None object.
     /// </summary>
     /// <returns>A new reference to None. In newer versions of Python, None is immortal anyway.</returns>
-    internal static pyoPtr GetNone()
+    public static pyoPtr GetNone()
     {
         if (_PyNone == IntPtr.Zero)
         {

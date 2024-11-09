@@ -4,7 +4,7 @@ using System.Runtime.InteropServices.Marshalling;
 namespace CSnakes.Runtime.CPython.CAPI;
 
 [CustomMarshaller(typeof(string), MarshalMode.Default, typeof(NonFreeUtf8StringMarshaller))]
-internal static unsafe class NonFreeUtf8StringMarshaller
+public static unsafe class NonFreeUtf8StringMarshaller
 {
     public static byte* ConvertToUnmanaged(string? managed) =>
         Utf8StringMarshaller.ConvertToUnmanaged(managed);
@@ -19,7 +19,7 @@ internal static unsafe class NonFreeUtf8StringMarshaller
 }
 
 [CustomMarshaller(typeof(string), MarshalMode.Default, typeof(Utf32StringMarshaller))]
-internal static class Utf32StringMarshaller
+public static class Utf32StringMarshaller
 {
     public static IntPtr ConvertToUnmanaged(string? managed)
     {

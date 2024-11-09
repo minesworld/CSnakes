@@ -1,9 +1,7 @@
-﻿using CSnakes.Runtime.Python;
-
-namespace CSnakes.Runtime.CPython.CAPI;
+﻿namespace CSnakes.Runtime.CPython.CAPI;
 using pyoPtr = nint;
 
-internal unsafe partial class Proxy
+public unsafe partial class Proxy
 {
     public static pyoPtr GetPyEmptyTuple()
     {
@@ -17,7 +15,7 @@ internal unsafe partial class Proxy
     /// </summary>
     /// <param name="items">An array of pointers to PyObject</param>
     /// <returns>A new reference to the resulting tuple object.</returns>
-    internal static pyoPtr PackTuple(Span<pyoPtr> items)
+    public static pyoPtr PackTuple(Span<pyoPtr> items)
     {
         // This is a shortcut to a CPython optimization. Keep an empty tuple and reuse it.
         if (items.Length == 0)
@@ -40,7 +38,7 @@ internal unsafe partial class Proxy
     /// <param name="pos">The position as ssize_t</param>
     /// <param name="o">The new value</param>
     /// <returns>0 on success and -1 on failure</returns>
-    internal static int SetItemInPyTuple(pyoPtr ob, nint pos, pyoPtr o)
+    public static int SetItemInPyTuple(pyoPtr ob, nint pos, pyoPtr o)
     {
         int result = PyTuple_SetItem(ob, pos, o);
         if (result != -1)
@@ -58,7 +56,7 @@ internal unsafe partial class Proxy
     /// <param name="pos">the index position as ssize_t</param>
     /// <returns>A new reference to the item.</returns>
     /// <exception cref="IndexOutOfRangeException"></exception>
-    internal static nint GetItemOfPyTuple(pyoPtr ob, nint pos)
+    public static nint GetItemOfPyTuple(pyoPtr ob, nint pos)
     {
         nint item = PyTuple_GetItem(ob, pos);
         if (item == IntPtr.Zero)

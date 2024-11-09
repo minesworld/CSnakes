@@ -1,7 +1,7 @@
 ﻿namespace CSnakes.Runtime.CPython.CAPI;
 using pyoPtr = nint;
 
-internal unsafe partial class Proxy
+public unsafe partial class Proxy
 {
     public static PyBuffer? GetBuffer(pyoPtr p)
     {

@@ -1,6 +1,6 @@
 ﻿namespace CSnakes.Runtime.CPython;
 
-internal unsafe partial class API
+public unsafe partial class API
 {
     /// <summary>
     /// Return the object from dictionary p which has a key `key`. 
@@ -9,7 +9,7 @@ internal unsafe partial class API
     /// <param name="key">Key Object</param>
     /// <exception cref="KeyNotFoundException">If the key is not found</exception>
     /// <returns>New reference.</returns>
-    internal static nint GetItemOfPyMapping(ReferenceObject map, ReferenceObject key) => PyObject_GetItem(map, key);
+    public static nint GetItemOfPyMapping(ReferenceObject map, ReferenceObject key) => PyObject_GetItem(map, key);
 
     /// <summary>
     /// Insert val into the dictionary p with a key of key. 
@@ -20,5 +20,5 @@ internal unsafe partial class API
     /// <param name="key">Key</param>
     /// <param name="value">Value</param>
     /// <returns>Return 0 on success or -1 on failure.</returns>
-    internal static bool SetItemInPyMapping(ReferenceObject dict, ReferenceObject key, ReferenceObject value) => PyObject_SetItem(dict, key, value) == 0;
+    public static bool SetItemInPyMapping(ReferenceObject dict, ReferenceObject key, ReferenceObject value) => PyObject_SetItem(dict, key, value) == 0;
 }

@@ -1,11 +1,9 @@
-﻿using CSnakes.Runtime.Python;
-
-namespace CSnakes.Runtime.CPython.CAPI;
+﻿namespace CSnakes.Runtime.CPython.CAPI;
 using pyoPtr = nint;
 
-internal unsafe partial class Proxy
+public unsafe partial class Proxy
 {
-    internal static nint PackDict(Span<string> kwnames, Span<pyoPtr> kwvalues)
+    public static nint PackDict(Span<string> kwnames, Span<pyoPtr> kwvalues)
     {
         var dict = PyDict_New();
         for (int i = 0; i < kwnames.Length; i ++)

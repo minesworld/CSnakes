@@ -1,7 +1,6 @@
-﻿using CSnakes.Runtime.Python;
+﻿namespace CSnakes.Runtime.CPython;
 
-namespace CSnakes.Runtime.CPython;
-internal unsafe partial class API
+public unsafe partial class API
 {
     internal static PyBuffer GetBuffer(ReferenceObject p)
     {

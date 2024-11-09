@@ -1,16 +1,14 @@
-﻿using CSnakes.Runtime.Python;
-
-namespace CSnakes.Runtime.CPython.CAPI;
+﻿namespace CSnakes.Runtime.CPython.CAPI;
 using pyoPtr = nint;
 
-internal unsafe partial class Proxy
+public unsafe partial class Proxy
 {
     /// <summary>
     /// Calls PyLong_AsLongLong and throws a Python Exception if an error occurs.
     /// </summary>
     /// <param name="p"></param>
     /// <returns></returns>
-    internal static long LongLongFromPyLong(pyoPtr p)
+    public static long LongLongFromPyLong(pyoPtr p)
     {
         long result = PyLong_AsLongLong(p);
         if (result == -1 && PyErr_Occurred() != IntPtr.Zero)
@@ -25,7 +23,7 @@ internal unsafe partial class Proxy
     /// </summary>
     /// <param name="p"></param>
     /// <returns></returns>
-    internal static long LongFromPyLong(pyoPtr p)
+    public static long LongFromPyLong(pyoPtr p)
     {
         long result = PyLong_AsLong(p);
         if (result == -1 && PyErr_Occurred() != IntPtr.Zero)

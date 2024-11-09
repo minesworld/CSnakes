@@ -3,9 +3,9 @@
 namespace CSnakes.Runtime.CPython.CAPI;
 using pyoPtr = nint;
 
-internal unsafe partial class Proxy
+public unsafe partial class Proxy
 {
-    internal static pyoPtr ByteSpanToPyBytes(Span<byte> bytes)
+    public static pyoPtr ByteSpanToPyBytes(Span<byte> bytes)
     {
         fixed (byte* b = bytes)
         {
@@ -13,7 +13,7 @@ internal unsafe partial class Proxy
         }
     }
 
-    internal static byte[] ByteArrayFromPyBytes(pyoPtr pyBytesPtr)
+    public static byte[] ByteArrayFromPyBytes(pyoPtr pyBytesPtr)
     {
         byte* ptr = PyBytes_AsString(pyBytesPtr);
         nint size = PyBytes_Size(pyBytesPtr);

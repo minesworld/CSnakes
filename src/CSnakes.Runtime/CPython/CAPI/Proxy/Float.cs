@@ -1,11 +1,9 @@
-﻿using CSnakes.Runtime.Python;
-
-namespace CSnakes.Runtime.CPython.CAPI;
+﻿namespace CSnakes.Runtime.CPython.CAPI;
 using pyoPtr = nint;
 
-internal unsafe partial class Proxy
+public unsafe partial class Proxy
 {
-    internal static double DoubleFromPyFloat(pyoPtr p)
+    public static double DoubleFromPyFloat(pyoPtr p)
     {
         double result = PyFloat_AsDouble(p);
         if (result == -1 && PyErr_Occurred() != IntPtr.Zero)

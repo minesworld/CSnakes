@@ -1,8 +1,6 @@
-﻿using CSnakes.Runtime.Python;
+﻿namespace CSnakes.Runtime.CPython;
 
-namespace CSnakes.Runtime.CPython;
-
-internal unsafe partial class API
+public unsafe partial class API
 {
     /// <summary>
     /// Set the Tuple Item at position `pos` to the object `o`.
@@ -12,7 +10,7 @@ internal unsafe partial class API
     /// <param name="pos">The position as ssize_t</param>
     /// <param name="o">The new value</param>
     /// <returns>0 on success and -1 on failure</returns>
-    internal static int SetItemInPyTuple(ReferenceObject ob, nint pos, ReferenceObject o)
+    public static int SetItemInPyTuple(ReferenceObject ob, nint pos, ReferenceObject o)
     {
         int result = PyTuple_SetItem(ob, pos, o);
         if (result != -1)
@@ -32,7 +30,7 @@ internal unsafe partial class API
     /// <param name="pos">the index position as ssize_t</param>
     /// <returns>A new reference to the item.</returns>
     /// <exception cref="IndexOutOfRangeException"></exception>
-    internal static nint GetItemOfPyTuple(ReferenceObject ob, nint pos)
+    public static nint GetItemOfPyTuple(ReferenceObject ob, nint pos)
     {
         nint item = PyTuple_GetItem(ob, pos);
         if (item == IntPtr.Zero)
